@@ -17,7 +17,7 @@ Art Revolution is a comprehensive cultural events platform designed for Timișoa
 - **Real-time Updates**: Events refresh every 6 hours with manual refresh capability
 - **Intelligent Filtering**: Filter by category, mood, target audience, and more
 
-![Events Grid](./docs/images/events-grid.png)
+![Events Grid](./docs/images/02-events-grid.png)
 *Dynamic events grid showing AI-enhanced cultural events with smart filtering options*
 
 ### 📝 **Community Event Submission**
@@ -26,7 +26,7 @@ Art Revolution is a comprehensive cultural events platform designed for Timișoa
 - **Auto-Publishing**: Events scoring 70+ are published immediately
 - **Rich Form Fields**: Support for images, recurring events, tags, and 14 different categories
 
-![Event Submission Form](./docs/images/submission-form.png)
+![Event Submission Form](./docs/images/03-submission-form.png)
 *Comprehensive event submission modal with all necessary fields for quality event creation*
 
 ### 🎨 **Advanced UI/UX**
@@ -40,7 +40,7 @@ Art Revolution is a comprehensive cultural events platform designed for Timișoa
 - **AI Translation**: Automatic content translation for international visitors
 - **Localized Content**: Cultural context maintained across languages
 
-![Filter Panel](./docs/images/filter-panel.png)
+![Filter Panel](./docs/images/04-filter-panel.png)
 *Advanced filtering system with categories, moods, and target audience options*
 
 ### � **Complete Site Navigation**
@@ -49,16 +49,16 @@ Art Revolution is a comprehensive cultural events platform designed for Timișoa
 - **Newsletter Integration**: Weekly cultural digest subscription
 - **Contact System**: Direct communication channel with the team
 
-![About Page](./docs/images/about-page.png)
+![About Page](./docs/images/05-about-page.png)
 *Professional About page explaining our mission in Timișoara's cultural transformation*
 
-![Partners Page](./docs/images/partners-page.png)
+![Partners Page](./docs/images/06-partners-page.png)
 *Partners section highlighting official collaborations with Timișoara cultural institutions*
 
-![Newsletter Page](./docs/images/newsletter-page.png)
+![Newsletter Page](./docs/images/07-newsletter-page.png)
 *Newsletter subscription with curated events and exclusive cultural content*
 
-![Contact Page](./docs/images/contact-page.png)
+![Contact Page](./docs/images/08-contact-page.png)
 *Contact form and information for community engagement and feedback*
 
 ## �🛠️ Tech Stack
@@ -72,7 +72,7 @@ Art Revolution is a comprehensive cultural events platform designed for Timișoa
 
 ## � Platform Statistics
 
-![Platform Stats](./docs/images/platform-stats.png)
+![Platform Stats](./docs/images/09-platform-stats.png)
 *Real-time statistics showing active events, categories, and last update information*
 
 ## 📦 Quick Installation
