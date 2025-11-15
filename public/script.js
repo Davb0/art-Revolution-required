@@ -190,15 +190,16 @@ class EventsApp {
 
   createEventCard(event, index) {
     const date = new Date(event.date);
-    const formattedDate = date.toLocaleDateString('en-US', {
+    const formattedDate = date.toLocaleDateString('ro-RO', {
       weekday: 'short',
       month: 'short',
       day: 'numeric'
     });
     
-    const formattedTime = date.toLocaleTimeString('en-US', {
+    const formattedTime = date.toLocaleTimeString('ro-RO', {
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
+      hour12: false
     });
 
     const category = event.aiCategory || event.category || 'event';
@@ -247,16 +248,17 @@ class EventsApp {
     if (!modal || !overlay) return;
     
     const date = new Date(event.date);
-    const formattedDate = date.toLocaleDateString('en-US', {
+    const formattedDate = date.toLocaleDateString('ro-RO', {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
       day: 'numeric'
     });
     
-    const formattedTime = date.toLocaleTimeString('en-US', {
+    const formattedTime = date.toLocaleTimeString('ro-RO', {
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
+      hour12: false
     });
 
     const description = event.enhancedDescription || event.originalDescription || 'No description available.';
