@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partners • Art Revolution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="hero">
+        <nav class="nav">
+            <div class="nav-brand">
+                <a href="/" class="logo-link">
+                    <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300">
+                        <defs>
+                            <style>
+                                .logo-text { 
+                                    font-family: 'Times New Roman', serif; 
+                                    font-weight: normal;
+                                    fill: currentColor;
+                                }
+                                .main-line { font-size: 100px; }
+                                .sub-line { font-size: 70px; font-style: italic; }
+                            </style>
+                        </defs>
+                        <text x="20" y="120" class="logo-text main-line">art</text>
+                        <text x="120" y="120" class="logo-text main-line">|</text>
+                        <text x="150" y="120" class="logo-text main-line">Revolution</text>
+                        <text x="280" y="210" class="logo-text sub-line">/required</text>
+                    </svg>
+                </a>
+                <div class="nav-brand-info">
+                    <span class="tagline">Timișoara's Cultural Pulse</span>
+                    <div class="nav-links">
+                        <a href="/about.html" class="nav-link">About</a>
+                        <a href="/contact.html" class="nav-link">Contact</a>
+                        <a href="/newsletter.html" class="nav-link">Newsletter</a>
+                        <a href="/partners.html" class="nav-link active">Partners</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav-controls">
+                <button class="filter-btn" onclick="window.location.href='/'">
+                    <span>← Back to Events</span>
+                </button>
+            </div>
+        </nav>
+        
+        <div class="hero-content">
+            <h2 class="hero-title">Our <span class="highlight">Partners</span></h2>
+            <p class="hero-subtitle">Collaborating to bring you Timișoara's finest cultural experiences</p>
+        </div>
+    </header>
+
+    <main class="main-content subpage-content">
+        <div class="partners-container">
+            <section class="partners-section">
+                <h2 class="section-title">Official Event Sources</h2>
+                <p class="section-description">We partner with these official sources to bring you the most comprehensive event listings in Timișoara.</p>
+                
+                <div class="partners-grid">
+                    <div class="partner-card">
+                        <div class="partner-badge">Official</div>
+                        <h3>Timișoara Official</h3>
+                        <p class="partner-category">City Events & Announcements</p>
+                        <p class="partner-description">Official city events and cultural announcements from Timișoara's administration.</p>
+                        <a href="https://timisoara.ro" target="_blank" class="partner-link">Visit →</a>
+                    </div>
+
+                    <div class="partner-card">
+                        <div class="partner-badge">Community</div>
+                        <h3>What to Do</h3>
+                        <p class="partner-category">Community Events Platform</p>
+                        <p class="partner-description">Crowdsourced event listings and community recommendations for local experiences.</p>
+                        <a href="https://whattodo.ro" target="_blank" class="partner-link">Visit →</a>
+                    </div>
+
+                    <div class="partner-card">
+                        <div class="partner-badge">Local</div>
+                        <h3>Local Events Hub</h3>
+                        <p class="partner-category">Grassroots Cultural Events</p>
+                        <p class="partner-description">Supporting emerging artists and local cultural initiatives across the city.</p>
+                        <a href="#" class="partner-link">Learn More →</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="partners-section">
+                <h2 class="section-title">Technology Partners</h2>
+                <p class="section-description">Powered by cutting-edge technologies and AI to enhance your experience.</p>
+                
+                <div class="tech-partners-grid">
+                    <div class="tech-partner">
+                        <div class="tech-icon">🤖</div>
+                        <h3>Google Generative AI</h3>
+                        <p>AI-powered event enhancement and recommendations</p>
+                    </div>
+                    <div class="tech-partner">
+                        <div class="tech-icon">⚡</div>
+                        <h3>Express.js</h3>
+                        <p>Fast and reliable backend infrastructure</p>
+                    </div>
+                    <div class="tech-partner">
+                        <div class="tech-icon">🌐</div>
+                        <h3>Web Scraping</h3>
+                        <p>Real-time event data aggregation</p>
+                    </div>
+                    <div class="tech-partner">
+                        <div class="tech-icon">🎨</div>
+                        <h3>Modern Frontend</h3>
+                        <p>Beautiful, responsive user interface</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="partners-section">
+                <h2 class="section-title">Want to Partner With Us?</h2>
+                <div class="partnership-cta">
+                    <p>If you represent an event venue, cultural organization, or media outlet in Timișoara, we'd love to collaborate with you.</p>
+                    
+                    <div class="partnership-benefits">
+                        <div class="benefit">
+                            <span class="benefit-icon">📊</span>
+                            <h4>Increased Visibility</h4>
+                            <p>Reach more people discovering events in Timișoara</p>
+                        </div>
+                        <div class="benefit">
+                            <span class="benefit-icon">🎯</span>
+                            <h4>Targeted Audience</h4>
+                            <p>AI-enhanced recommendations connect you with interested attendees</p>
+                        </div>
+                        <div class="benefit">
+                            <span class="benefit-icon">🤝</span>
+                            <h4>Community Support</h4>
+                            <p>Support the cultural revolution happening in Timișoara</p>
+                        </div>
+                    </div>
+
+                    <button class="cta-btn" onclick="document.getElementById('contactForm').scrollIntoView({behavior: 'smooth'})">Get in Touch</button>
+                </div>
+            </section>
+
+            <section class="contact-section" id="contactForm">
+                <h2 class="section-title">Partnership Inquiry Form</h2>
+                <form class="partnership-form" id="partnershipForm">
+                    <div class="form-group">
+                        <label for="org">Organization Name *</label>
+                        <input type="text" id="org" name="org" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact">Contact Person *</label>
+                        <input type="text" id="contact" name="contact" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pemail">Email *</label>
+                        <input type="email" id="pemail" name="pemail" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ptype">Partnership Type *</label>
+                        <select id="ptype" name="ptype" required>
+                            <option value="">Select...</option>
+                            <option value="event-venue">Event Venue</option>
+                            <option value="cultural-org">Cultural Organization</option>
+                            <option value="media">Media Outlet</option>
+                            <option value="sponsor">Sponsor</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pmessage">Tell us about your organization</label>
+                        <textarea id="pmessage" name="pmessage" rows="5"></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Send Partnership Inquiry</button>
+                    <p class="form-message" id="formMessage"></p>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <style>
+        .subpage-content {
+            padding: var(--space-2xl) var(--space-lg);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .partners-container {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2xl);
+        }
+
+        .partners-section {
+            background: var(--surface-dark);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            color: var(--primary-color);
+            margin-bottom: var(--space-lg);
+        }
+
+        .section-description {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-lg);
+            font-size: 1rem;
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-lg);
+        }
+
+        .partner-card {
+            background: var(--background-dark);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            position: relative;
+            transition: all var(--transition-normal);
+        }
+
+        .partner-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(212, 165, 116, 0.1);
+        }
+
+        .partner-badge {
+            position: absolute;
+            top: var(--space-md);
+            right: var(--space-md);
+            background: var(--primary-color);
+            color: white;
+            padding: var(--space-xs) var(--space-md);
+            border-radius: var(--radius-md);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .partner-card h3 {
+            color: var(--primary-color);
+            margin-bottom: var(--space-xs);
+            margin-top: var(--space-sm);
+        }
+
+        .partner-category {
+            color: var(--text-accent);
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: var(--space-md);
+        }
+
+        .partner-description {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-lg);
+            line-height: 1.6;
+        }
+
+        .partner-link {
+            display: inline-block;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all var(--transition-normal);
+        }
+
+        .partner-link:hover {
+            gap: var(--space-xs);
+            transform: translateX(4px);
+        }
+
+        .tech-partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-lg);
+        }
+
+        .tech-partner {
+            background: var(--background-dark);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            text-align: center;
+            transition: all var(--transition-normal);
+        }
+
+        .tech-partner:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-4px);
+        }
+
+        .tech-icon {
+            font-size: 2.5rem;
+            margin-bottom: var(--space-md);
+        }
+
+        .tech-partner h3 {
+            color: var(--primary-color);
+            margin-bottom: var(--space-sm);
+        }
+
+        .tech-partner p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .partnership-cta {
+            background: var(--background-dark);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+        }
+
+        .partnership-cta > p {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-lg);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .partnership-benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-lg);
+            margin-bottom: var(--space-lg);
+        }
+
+        .benefit {
+            text-align: center;
+        }
+
+        .benefit-icon {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: var(--space-md);
+        }
+
+        .benefit h4 {
+            color: var(--primary-color);
+            margin-bottom: var(--space-sm);
+        }
+
+        .benefit p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .cta-btn {
+            width: 100%;
+            padding: var(--space-md);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .contact-section {
+            background: var(--surface-dark);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+        }
+
+        .partnership-form {
+            background: var(--background-dark);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+        }
+
+        .form-group {
+            margin-bottom: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            color: var(--text-primary);
+            margin-bottom: var(--space-xs);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            background: var(--surface-light);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            transition: all var(--transition-normal);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: var(--background-dark);
+            box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: var(--space-md);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .form-message {
+            margin-top: var(--space-md);
+            text-align: center;
+            min-height: 20px;
+        }
+
+        .form-message.success {
+            color: var(--success-color);
+        }
+
+        .logo-link {
+            display: flex;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+
+    <script>
+        document.getElementById('partnershipForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const org = document.getElementById('org').value;
+            const contact = document.getElementById('contact').value;
+            const email = document.getElementById('pemail').value;
+            const ptype = document.getElementById('ptype').value;
+            
+            if (org && contact && email && ptype) {
+                const formMessage = document.getElementById('formMessage');
+                formMessage.textContent = '✓ Thank you! We\'ll review your partnership inquiry and get back to you soon.';
+                formMessage.className = 'form-message success';
+                
+                setTimeout(() => {
+                    this.reset();
+                    formMessage.textContent = '';
+                }, 4000);
+            }
+        });
+    </script>
+</body>
+</html>

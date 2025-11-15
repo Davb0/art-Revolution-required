@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact • Art Revolution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="hero">
+        <nav class="nav">
+            <div class="nav-brand">
+                <a href="/" class="logo-link">
+                    <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300">
+                        <defs>
+                            <style>
+                                .logo-text { 
+                                    font-family: 'Times New Roman', serif; 
+                                    font-weight: normal;
+                                    fill: currentColor;
+                                }
+                                .main-line { font-size: 100px; }
+                                .sub-line { font-size: 70px; font-style: italic; }
+                            </style>
+                        </defs>
+                        <text x="20" y="120" class="logo-text main-line">art</text>
+                        <text x="120" y="120" class="logo-text main-line">|</text>
+                        <text x="150" y="120" class="logo-text main-line">Revolution</text>
+                        <text x="280" y="210" class="logo-text sub-line">/required</text>
+                    </svg>
+                </a>
+                <div class="nav-brand-info">
+                    <span class="tagline">Timișoara's Cultural Pulse</span>
+                    <div class="nav-links">
+                        <a href="/about.html" class="nav-link">About</a>
+                        <a href="/contact.html" class="nav-link active">Contact</a>
+                        <a href="/newsletter.html" class="nav-link">Newsletter</a>
+                        <a href="/partners.html" class="nav-link">Partners</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav-controls">
+                <button class="filter-btn" onclick="window.location.href='/'">
+                    <span>← Back to Events</span>
+                </button>
+            </div>
+        </nav>
+        
+        <div class="hero-content">
+            <h2 class="hero-title">Get in <span class="highlight">Touch</span></h2>
+            <p class="hero-subtitle">Have a question or suggestion? We'd love to hear from you!</p>
+        </div>
+    </header>
+
+    <main class="main-content subpage-content">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2 class="section-title">Contact Information</h2>
+                <div class="info-item">
+                    <h3>📧 Email</h3>
+                    <p><a href="mailto:hello@artrevolution.ro">hello@artrevolution.ro</a></p>
+                </div>
+                <div class="info-item">
+                    <h3>📍 Location</h3>
+                    <p>Timișoara, Romania</p>
+                    <p class="subtitle">Europe's Capital of Culture 2023</p>
+                </div>
+                <div class="info-item">
+                    <h3>🤝 Social</h3>
+                    <div class="social-links">
+                        <a href="https://twitter.com" target="_blank" class="social-link">Twitter</a>
+                        <a href="https://instagram.com" target="_blank" class="social-link">Instagram</a>
+                        <a href="https://facebook.com" target="_blank" class="social-link">Facebook</a>
+                    </div>
+                </div>
+            </div>
+
+            <form class="contact-form" id="contactForm">
+                <h2 class="section-title">Send us a Message</h2>
+                
+                <div class="form-group">
+                    <label for="name">Name *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Subject *</label>
+                    <input type="text" id="subject" name="subject" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message *</label>
+                    <textarea id="message" name="message" rows="6" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Send Message</button>
+                <p class="form-message" id="formMessage"></p>
+            </form>
+        </div>
+    </main>
+
+    <style>
+        .subpage-content {
+            padding: var(--space-2xl) var(--space-lg);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: var(--space-2xl);
+        }
+
+        @media (max-width: 768px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .contact-info {
+            background: var(--surface-dark);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+        }
+
+        .info-item {
+            margin-bottom: var(--space-lg);
+        }
+
+        .info-item h3 {
+            color: var(--primary-color);
+            margin-bottom: var(--space-sm);
+            font-size: 1.1rem;
+        }
+
+        .info-item p {
+            color: var(--text-secondary);
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin-top: var(--space-xs);
+        }
+
+        .social-links {
+            display: flex;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: inline-block;
+            padding: var(--space-xs) var(--space-md);
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            transition: all var(--transition-normal);
+            font-size: 0.875rem;
+        }
+
+        .social-link:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .contact-form {
+            background: var(--surface-dark);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            color: var(--primary-color);
+            margin-bottom: var(--space-lg);
+        }
+
+        .form-group {
+            margin-bottom: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            color: var(--text-primary);
+            margin-bottom: var(--space-xs);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            background: var(--surface-light);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            transition: all var(--transition-normal);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: var(--background-dark);
+            box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: var(--space-md);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .form-message {
+            margin-top: var(--space-md);
+            text-align: center;
+            min-height: 20px;
+        }
+
+        .form-message.success {
+            color: var(--success-color);
+        }
+
+        .form-message.error {
+            color: #e87474;
+        }
+
+        .logo-link {
+            display: flex;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        info-item a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .info-item a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            if (name && email && subject && message) {
+                const formMessage = document.getElementById('formMessage');
+                formMessage.textContent = '✓ Thank you! We\'ll get back to you soon.';
+                formMessage.className = 'form-message success';
+                
+                setTimeout(() => {
+                    this.reset();
+                    formMessage.textContent = '';
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>

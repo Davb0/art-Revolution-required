@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About • Art Revolution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="hero">
+        <nav class="nav">
+            <div class="nav-brand">
+                <a href="/" class="logo-link">
+                    <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300">
+                        <defs>
+                            <style>
+                                .logo-text { 
+                                    font-family: 'Times New Roman', serif; 
+                                    font-weight: normal;
+                                    fill: currentColor;
+                                }
+                                .main-line { font-size: 100px; }
+                                .sub-line { font-size: 70px; font-style: italic; }
+                            </style>
+                        </defs>
+                        <text x="20" y="120" class="logo-text main-line">art</text>
+                        <text x="120" y="120" class="logo-text main-line">|</text>
+                        <text x="150" y="120" class="logo-text main-line">Revolution</text>
+                        <text x="280" y="210" class="logo-text sub-line">/required</text>
+                    </svg>
+                </a>
+                <div class="nav-brand-info">
+                    <span class="tagline">Timișoara's Cultural Pulse</span>
+                    <div class="nav-links">
+                        <a href="/about.html" class="nav-link active">About</a>
+                        <a href="/contact.html" class="nav-link">Contact</a>
+                        <a href="/newsletter.html" class="nav-link">Newsletter</a>
+                        <a href="/partners.html" class="nav-link">Partners</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav-controls">
+                <button class="filter-btn" onclick="window.location.href='/'">
+                    <span>← Back to Events</span>
+                </button>
+            </div>
+        </nav>
+        
+        <div class="hero-content">
+            <h2 class="hero-title">About <span class="highlight">Art Revolution</span></h2>
+            <p class="hero-subtitle">Discover the story behind Timișoara's cultural transformation</p>
+        </div>
+    </header>
+
+    <main class="main-content subpage-content">
+        <section class="content-section">
+            <div class="section-card">
+                <h2 class="section-title">Our Mission</h2>
+                <p>Art Revolution is dedicated to showcasing the vibrant cultural events happening in Timișoara, Romania's European Capital of Culture. We believe in the power of art to connect communities and inspire change.</p>
+            </div>
+
+            <div class="section-card">
+                <h2 class="section-title">What We Do</h2>
+                <p>We aggregate events from multiple sources across Timișoara and enhance them with AI-powered insights. Our platform helps you discover hidden cultural gems and stay informed about the city's artistic pulse.</p>
+            </div>
+
+            <div class="section-card">
+                <h2 class="section-title">Technology</h2>
+                <p>Built with modern web technologies, Art Revolution uses advanced scraping techniques to gather real-time event data and AI enhancement to provide personalized recommendations based on your preferences.</p>
+            </div>
+
+            <div class="section-card">
+                <h2 class="section-title">The Team</h2>
+                <p>We're a passionate group of developers and culture enthusiasts committed to making Timișoara's events more accessible. Our team works 24/7 to ensure you never miss an important cultural moment.</p>
+            </div>
+
+            <div class="stats-container">
+                <div class="stat-box">
+                    <h3>2025</h3>
+                    <p>Year Founded</p>
+                </div>
+                <div class="stat-box">
+                    <h3>9+</h3>
+                    <p>Events Tracked</p>
+                </div>
+                <div class="stat-box">
+                    <h3>3</h3>
+                    <p>Event Sources</p>
+                </div>
+                <div class="stat-box">
+                    <h3>∞</h3>
+                    <p>Passion</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <style>
+        .subpage-content {
+            padding: var(--space-2xl) var(--space-lg);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .content-section {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+        }
+
+        .section-card {
+            background: var(--surface-dark);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            transition: all var(--transition-normal);
+        }
+
+        .section-card:hover {
+            background: var(--surface-light);
+            border-color: var(--primary-color);
+            transform: translateX(4px);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            color: var(--primary-color);
+            margin-bottom: var(--space-md);
+        }
+
+        .section-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-2xl);
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            text-align: center;
+            color: white;
+        }
+
+        .stat-box h3 {
+            font-size: 2.5rem;
+            margin-bottom: var(--space-sm);
+        }
+
+        .stat-box p {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .logo-link {
+            display: flex;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</body>
+</html>
