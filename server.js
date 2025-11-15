@@ -137,6 +137,61 @@ app.post('/api/events/refresh', validateApiKey, async (req, res) => {
   }
 });
 
+// Translate events
+app.post('/api/translate-events', async (req, res) => {
+  try {
+    const { events, targetLanguage } = req.body;
+    
+    if (!events || !Array.isArray(events) || !targetLanguage) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid request. Events array and targetLanguage required.'
+      });
+    }
+    
+    if (!['en', 'ro'].includes(targetLanguage)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Unsupported language. Use "en" or "ro".'
+      });
+    }
+    
+    console.log(`Translating ${events.length} events to ${targetLanguage}`);
+    
+    const translatedEvents = await Promise.all(
+      events.map(async (event) => {
+        // Check if event already has translation for target language
+        if (event.translations && event.translations[targetLanguage]) {
+          return event;
+        }
+        
+        try {
+          const translation = await aiService.translateEvent(event, targetLanguage);
+          return {
+            ...event,
+            translations: {
+              ...event.translations,
+              [targetLanguage]: translation
+            }
+          };
+        } catch (error) {
+          console.warn(`Failed to translate event "${event.title}":`, error.message);
+          // Return event without translation on error
+          return event;
+        }
+      })
+    );
+    
+    res.json(translatedEvents);
+  } catch (error) {
+    console.error('Translation error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Translation failed'
+    });
+  }
+});
+
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({

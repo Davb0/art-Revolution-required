@@ -168,14 +168,16 @@ body {
   align-items: center;
 }
 
-.filter-btn, .refresh-btn {
+.filter-btn,
+.refresh-btn,
+.translate-btn {
   display: flex;
   align-items: center;
   gap: var(--space-xs);
-  padding: var(--space-xs) var(--space-md);
+  padding: var(--space-sm) var(--space-md);
   background: var(--surface-light);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   color: var(--text-primary);
   font-size: 0.875rem;
   font-weight: 500;
@@ -183,11 +185,24 @@ body {
   transition: all var(--transition-normal);
 }
 
-.filter-btn:hover, .refresh-btn:hover {
+.filter-btn:hover, .refresh-btn:hover, .translate-btn:hover {
   background: var(--primary-color);
   border-color: var(--primary-color);
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
+}
+
+.translate-btn.active {
+  background: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+}
+
+.translate-text {
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .refresh-btn {
@@ -690,6 +705,17 @@ body {
 .event-card:nth-child(4) { animation-delay: 0.4s; }
 .event-card:nth-child(5) { animation-delay: 0.5s; }
 .event-card:nth-child(6) { animation-delay: 0.6s; }
+
+/* Visit Link Styling */
+a[href^="http"]:hover {
+  background: var(--accent-color) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+a[href^="http"]:active {
+  transform: translateY(0);
+}
 
 /* Utility Classes */
 .sr-only {

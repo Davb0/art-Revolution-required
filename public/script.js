@@ -9,12 +9,58 @@ class EventsApp {
       mood: '',
       audience: ''
     };
+    this.currentLanguage = 'en'; // Default to English
+    this.translations = {
+      en: {
+        tagline: "Timișoara's Cultural Pulse",
+        heroTitle: "Experience Timișoara's Cultural Revolution",
+        heroSubtitle: "AI-enhanced discovery of the most exciting events in Romania's European Capital of Culture",
+        filterEvents: "Filter Events",
+        eventsLabel: "Events",
+        categoriesLabel: "Categories",
+        aiEnhancedLabel: "AI Enhanced",
+        visitEventPage: "Visit Event Page",
+        ticketIcon: "🎫",
+        categories: {
+          art: "Art",
+          music: "Music", 
+          theatre: "Theatre",
+          theater: "Theatre",
+          exhibition: "Exhibition",
+          food: "Food",
+          technology: "Technology",
+          cultural: "Cultural"
+        }
+      },
+      ro: {
+        tagline: "Pulsul Cultural al Timișoarei",
+        heroTitle: "Experimentează Revoluția Culturală a Timișoarei",
+        heroSubtitle: "Descoperirea îmbunătățită de AI a celor mai interesante evenimente din Capitala Culturală Europeană a României",
+        filterEvents: "Filtrează Evenimente",
+        eventsLabel: "Evenimente",
+        categoriesLabel: "Categorii",
+        aiEnhancedLabel: "Îmbunătățit AI",
+        visitEventPage: "Vizitează Pagina Evenimentului",
+        ticketIcon: "🎫",
+        categories: {
+          art: "Artă",
+          music: "Muzică",
+          theatre: "Teatru",
+          theater: "Teatru", 
+          exhibition: "Expoziție",
+          food: "Mâncare",
+          technology: "Tehnologie",
+          cultural: "Cultural"
+        }
+      }
+    };
     
     this.init();
   }
 
   async init() {
     this.bindEventListeners();
+    this.updateTranslateButton();
     await this.loadEvents();
     this.setupFilters();
   }
@@ -23,6 +69,7 @@ class EventsApp {
     // Navigation controls
     document.getElementById('filterBtn')?.addEventListener('click', () => this.toggleFilters());
     document.getElementById('refreshBtn')?.addEventListener('click', () => this.refreshEvents());
+    document.getElementById('translateBtn')?.addEventListener('click', () => this.toggleLanguage());
     
     // Filter panel
     document.getElementById('closeFilters')?.addEventListener('click', () => this.closeFilters());
@@ -80,6 +127,133 @@ class EventsApp {
     }
     
     await this.loadEvents();
+  }
+
+  async toggleLanguage() {
+    const previousLanguage = this.currentLanguage;
+    this.currentLanguage = this.currentLanguage === 'en' ? 'ro' : 'en';
+    
+    this.updateTranslations();
+    this.updateTranslateButton();
+    
+    // Show loading state
+    this.showLoading(true, 'Translating events...');
+    
+    try {
+      // Translate events if needed
+      await this.translateEvents();
+      this.renderEvents();
+    } catch (error) {
+      console.error('Translation failed:', error);
+      // Revert language change on error
+      this.currentLanguage = previousLanguage;
+      this.updateTranslateButton();
+      this.showError('Translation failed. Please try again.');
+    } finally {
+      this.showLoading(false);
+    }
+  }
+
+  updateTranslations() {
+    const t = this.translations[this.currentLanguage];
+    
+    // Update static text elements
+    const tagline = document.querySelector('.tagline');
+    if (tagline) tagline.textContent = t.tagline;
+    
+    const heroTitle = document.querySelector('.hero-title');
+    if (heroTitle) {
+      heroTitle.innerHTML = this.currentLanguage === 'en' 
+        ? 'Experience Timișoara\'s <span class="highlight">Cultural Revolution</span>'
+        : 'Experimentează <span class="highlight">Revoluția Culturală</span> a Timișoarei';
+    }
+    
+    const heroSubtitle = document.querySelector('.hero-subtitle');
+    if (heroSubtitle) heroSubtitle.textContent = t.heroSubtitle;
+    
+    const filterBtn = document.querySelector('#filterBtn span');
+    if (filterBtn) filterBtn.textContent = t.filterEvents;
+    
+    // Update stats labels
+    const eventLabel = document.querySelector('.stat-label');
+    if (eventLabel) eventLabel.textContent = t.eventsLabel;
+    
+    const categoryLabels = document.querySelectorAll('.stat-label');
+    if (categoryLabels[1]) categoryLabels[1].textContent = t.categoriesLabel;
+    if (categoryLabels[2]) categoryLabels[2].textContent = t.aiEnhancedLabel;
+  }
+
+  updateTranslateButton() {
+    const translateBtn = document.getElementById('translateBtn');
+    const translateText = translateBtn?.querySelector('.translate-text');
+    
+    if (translateText) {
+      translateText.textContent = this.currentLanguage.toUpperCase();
+    }
+    
+    if (translateBtn) {
+      translateBtn.title = this.currentLanguage === 'en' ? 'Switch to Romanian' : 'Comută în Engleză';
+    }
+  }
+
+  async translateEvents() {
+    // Check if events already have translations for current language
+    const needsTranslation = this.events.some(event => 
+      !event.translations || !event.translations[this.currentLanguage]
+    );
+    
+    if (!needsTranslation) {
+      return; // Already translated
+    }
+    
+    try {
+      const response = await fetch('/api/translate-events', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          events: this.events,
+          targetLanguage: this.currentLanguage
+        })
+      });
+      
+      if (!response.ok) {
+        throw new Error('Translation request failed');
+      }
+      
+      const translatedEvents = await response.json();
+      this.events = translatedEvents;
+      this.filteredEvents = [...this.events];
+      
+    } catch (error) {
+      console.error('Error translating events:', error);
+      throw error;
+    }
+  }
+
+  getLocalizedContent(event, field) {
+    // Check if event has translations
+    if (event.translations && event.translations[this.currentLanguage]) {
+      const translatedValue = event.translations[this.currentLanguage][field];
+      if (translatedValue) {
+        return translatedValue;
+      }
+    }
+    
+    // Fall back to original content
+    switch (field) {
+      case 'title':
+        return event.title;
+      case 'description':
+        return event.enhancedDescription || event.originalDescription || 'No description available.';
+      case 'location':
+        return event.location;
+      case 'ticketPrice':
+        return event.ticketPrice;
+      default:
+        return event[field] || '';
+    }
   }
 
   setupFilters() {
@@ -202,26 +376,32 @@ class EventsApp {
       hour12: false
     });
 
+    // Use translations if available, otherwise fall back to original content
+    const eventTitle = this.getLocalizedContent(event, 'title');
+    const eventLocation = this.getLocalizedContent(event, 'location');
+    const eventDescription = this.getLocalizedContent(event, 'description');
+    
     const category = event.aiCategory || event.category || 'event';
-    const description = event.enhancedDescription || event.originalDescription || 'No description available.';
     const tags = event.tags || [];
+    
+    const t = this.translations[this.currentLanguage];
     
     return `
       <div class="event-card" style="animation-delay: ${index * 0.1}s">
-        ${event.aiGenerated ? '<div class="ai-badge">✨ AI Enhanced</div>' : ''}
+        ${event.aiGenerated ? `<div class="ai-badge">✨ ${t.aiEnhancedLabel}</div>` : ''}
         
         <div class="event-header">
           <div class="event-date">
             📅 ${formattedDate} • ${formattedTime}
           </div>
-          <h3 class="event-title">${this.escapeHtml(event.title)}</h3>
+          <h3 class="event-title">${this.escapeHtml(eventTitle)}</h3>
           <div class="event-location">
-            📍 ${this.escapeHtml(event.location)}
+            📍 ${this.escapeHtml(eventLocation)}
           </div>
         </div>
         
         <div class="event-body">
-          <p class="event-description">${this.escapeHtml(description)}</p>
+          <p class="event-description">${this.escapeHtml(eventDescription)}</p>
           
           <div class="event-meta">
             <span class="event-category">${this.formatFilterLabel(category)}</span>
@@ -261,15 +441,19 @@ class EventsApp {
       hour12: false
     });
 
-    const description = event.enhancedDescription || event.originalDescription || 'No description available.';
+    const eventTitle = this.getLocalizedContent(event, 'title');
+    const eventLocation = this.getLocalizedContent(event, 'location');
+    const eventDescription = this.getLocalizedContent(event, 'description');
+    const eventTicketPrice = this.getLocalizedContent(event, 'ticketPrice');
     const tags = event.tags || [];
+    const t = this.translations[this.currentLanguage];
     
     modal.querySelector('.modal-content').innerHTML = `
       <div style="margin-bottom: 2rem;">
-        ${event.aiGenerated ? '<div class="ai-badge" style="position: relative; top: 0; right: 0; margin-bottom: 1rem;">✨ AI Enhanced Event</div>' : ''}
+        ${event.aiGenerated ? `<div class="ai-badge" style="position: relative; top: 0; right: 0; margin-bottom: 1rem;">✨ ${t.aiEnhancedLabel}</div>` : ''}
         
         <h2 style="font-family: var(--font-display); font-size: 2rem; font-weight: 600; margin-bottom: 1rem; line-height: 1.2;">
-          ${this.escapeHtml(event.title)}
+          ${this.escapeHtml(eventTitle)}
         </h2>
         
         <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; color: var(--text-secondary);">
@@ -280,9 +464,30 @@ class EventsApp {
             🕒 <span>${formattedTime}</span>
           </div>
           <div style="display: flex; align-items: center; gap: 0.5rem;">
-            📍 <span>${this.escapeHtml(event.location)}</span>
+            📍 <span>${this.escapeHtml(eventLocation)}</span>
           </div>
+          ${eventTicketPrice ? `
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              🎫 <span>${this.escapeHtml(eventTicketPrice)}</span>
+            </div>
+          ` : ''}
         </div>
+        
+        ${event.visitSource ? `
+          <div style="margin-bottom: 1.5rem;">
+            <a href="${this.escapeHtml(event.visitSource)}" target="_blank" rel="noopener noreferrer" 
+               style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; 
+                      background: var(--primary-color); color: white; text-decoration: none; 
+                      border-radius: var(--radius-md); font-weight: 500; transition: all var(--transition-normal);">
+              🔗 ${this.translations[this.currentLanguage].visitEventPage}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15,3 21,3 21,9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </a>
+          </div>
+        ` : ''}
         
         <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
           <span class="event-category">${this.formatFilterLabel(event.aiCategory || event.category || 'event')}</span>
@@ -291,9 +496,11 @@ class EventsApp {
         </div>
         
         <div style="margin-bottom: 2rem;">
-          <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem;">About This Event</h3>
+          <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem;">
+            ${this.currentLanguage === 'en' ? 'About This Event' : 'Despre Acest Eveniment'}
+          </h3>
           <p style="color: var(--text-secondary); line-height: 1.7; font-size: 1rem;">
-            ${this.escapeHtml(description)}
+            ${this.escapeHtml(eventDescription)}
           </p>
         </div>
         
@@ -381,6 +588,16 @@ class EventsApp {
 
   formatFilterLabel(text) {
     if (!text) return '';
+    
+    // Check if we have a translation for this category
+    const normalizedText = text.toLowerCase();
+    const t = this.translations[this.currentLanguage];
+    
+    if (t.categories[normalizedText]) {
+      return t.categories[normalizedText];
+    }
+    
+    // Default formatting for non-translated terms
     return text.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
   }
 

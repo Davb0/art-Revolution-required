@@ -146,7 +146,9 @@ class EventAggregator {
         minute: 30,
         location: 'Fratelli Studios',
         originalDescription: 'Live jazz performance featuring local and international artists.',
-        category: 'music'
+        category: 'music',
+        visitSource: 'https://www.fratelli.ro/evenimente',
+        ticketPrice: '50 RON'
       },
       {
         title: 'Art Exhibition - Contemporary Timișoara',
@@ -155,7 +157,9 @@ class EventAggregator {
         minute: 0,
         location: 'Muzeul de Artă',
         originalDescription: 'Showcasing modern art from local Timișoara artists.',
-        category: 'art'
+        category: 'exhibition',
+        visitSource: 'https://www.muzeuart-tm.ro/expozitii',
+        ticketPrice: '15 RON'
       },
       {
         title: 'Food Festival - Banat Flavors',
@@ -164,7 +168,9 @@ class EventAggregator {
         minute: 0,
         location: 'Piața Victoriei',
         originalDescription: 'Traditional Banat cuisine festival with local restaurants.',
-        category: 'food'
+        category: 'food',
+        visitSource: 'https://www.primariatm.ro/evenimente/festival-banat',
+        ticketPrice: 'Free entry'
       },
       {
         title: 'Theater Performance - Hamlet',
@@ -173,7 +179,9 @@ class EventAggregator {
         minute: 30,
         location: 'Teatrul Național',
         originalDescription: 'Classic Shakespearean play in Romanian.',
-        category: 'theater'
+        category: 'theatre',
+        visitSource: 'https://www.tnts.ro/spectacole/hamlet',
+        ticketPrice: '30-80 RON'
       },
       {
         title: 'Tech Meetup - Web Development',
@@ -182,7 +190,9 @@ class EventAggregator {
         minute: 0,
         location: 'UVT Campus',
         originalDescription: 'Monthly meetup for web developers in Timișoara.',
-        category: 'technology'
+        category: 'technology',
+        visitSource: 'https://www.meetup.com/timisoara-web-dev',
+        ticketPrice: 'Free'
       },
       {
         title: 'Christmas Market Opening',
@@ -191,7 +201,9 @@ class EventAggregator {
         minute: 0,
         location: 'Piața Unirii',
         originalDescription: 'Annual Christmas market with local crafts and food.',
-        category: 'cultural'
+        category: 'cultural',
+        visitSource: 'https://www.primariatm.ro/targul-de-craciun',
+        ticketPrice: 'Free entry'
       }
     ];
     
@@ -204,7 +216,9 @@ class EventAggregator {
         date: eventDate.toISOString(),
         location: event.location,
         originalDescription: event.originalDescription,
-        category: event.category
+        category: event.category,
+        visitSource: event.visitSource,
+        ticketPrice: event.ticketPrice
       };
     });
   }
