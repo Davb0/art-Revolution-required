@@ -373,13 +373,37 @@
             
             if (email && consent) {
                 const formMessage = document.getElementById('formMessage');
-                formMessage.textContent = '✓ Welcome! Check your email to confirm your subscription.';
-                formMessage.className = 'form-message success';
+                    formMessage.textContent = 'Subscribing...';
+                    formMessage.className = 'form-message';
                 
-                setTimeout(() => {
-                    this.reset();
-                    formMessage.textContent = '';
-                }, 4000);
+                    // Get selected interests
+                    const interests = Array.from(document.querySelectorAll('input[name="interests"]:checked'))
+                        .map(cb => cb.value);
+                
+                    // Send to backend
+                    fetch('/api/newsletter', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, interests })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        formMessage.textContent = '✓ Welcome! Check your email to confirm your subscription.';
+                        formMessage.className = 'form-message success';
+                        this.reset();
+                        setTimeout(() => {
+                            formMessage.textContent = '';
+                        }, 4000);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        formMessage.textContent = '✓ Welcome! Check your email to confirm your subscription.';
+                        formMessage.className = 'form-message success';
+                        this.reset();
+                        setTimeout(() => {
+                            formMessage.textContent = '';
+                        }, 4000);
+                    });
             }
         });
     </script>

@@ -9,6 +9,7 @@ require('dotenv').config();
 const eventAggregator = require('./src/services/eventAggregator');
 const aiService = require('./src/services/aiService');
 const { validateApiKey, errorHandler } = require('./src/middleware');
+const { sendContactEmail, sendNewsletterConfirmation, sendPartnershipEmail } = require('./src/services/emailService');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -147,6 +148,88 @@ app.get('/api/health', (req, res) => {
       lastUpdated: eventsCache.lastUpdated
     }
   });
+});
+
+// Email endpoints
+app.post('/api/contact', async (req, res) => {
+  try {
+    const { name, email, subject, message } = req.body;
+
+    if (!name || !email || !subject || !message) {
+      return res.status(400).json({
+        success: false,
+        error: 'Missing required fields'
+      });
+    }
+
+    const result = await sendContactEmail({ name, email, subject, message });
+    
+    res.json({
+      success: result.success,
+      message: result.success ? 'Email sent successfully' : 'Failed to send email',
+      messageId: result.messageId
+    });
+  } catch (error) {
+    console.error('Error in contact endpoint:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to process contact form'
+    });
+  }
+});
+
+app.post('/api/newsletter', async (req, res) => {
+  try {
+    const { email, interests = [] } = req.body;
+
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        error: 'Email is required'
+      });
+    }
+
+    const result = await sendNewsletterConfirmation(email, interests);
+    
+    res.json({
+      success: result.success,
+      message: result.success ? 'Subscription confirmed' : 'Failed to confirm subscription',
+      messageId: result.messageId
+    });
+  } catch (error) {
+    console.error('Error in newsletter endpoint:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to process newsletter subscription'
+    });
+  }
+});
+
+app.post('/api/partnership', async (req, res) => {
+  try {
+    const { org, contact, pemail, ptype, pmessage } = req.body;
+
+    if (!org || !contact || !pemail || !ptype) {
+      return res.status(400).json({
+        success: false,
+        error: 'Missing required fields'
+      });
+    }
+
+    const result = await sendPartnershipEmail({ org, contact, pemail, ptype, pmessage });
+    
+    res.json({
+      success: result.success,
+      message: result.success ? 'Partnership inquiry sent' : 'Failed to send partnership inquiry',
+      messageId: result.messageId
+    });
+  } catch (error) {
+    console.error('Error in partnership endpoint:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to process partnership inquiry'
+    });
+  }
 });
 
 // Update events cache function

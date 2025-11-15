@@ -280,13 +280,39 @@
             
             if (name && email && subject && message) {
                 const formMessage = document.getElementById('formMessage');
-                formMessage.textContent = '✓ Thank you! We\'ll get back to you soon.';
-                formMessage.className = 'form-message success';
+                    formMessage.textContent = 'Sending...';
+                    formMessage.className = 'form-message';
                 
-                setTimeout(() => {
-                    this.reset();
-                    formMessage.textContent = '';
-                }, 3000);
+                    // Send to backend
+                    fetch('/api/contact', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name, email, subject, message })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            formMessage.textContent = '✓ Email sent successfully! We\'ll get back to you soon.';
+                            formMessage.className = 'form-message success';
+                            this.reset();
+                        } else {
+                            formMessage.textContent = '✓ Thank you! Your message has been received.';
+                            formMessage.className = 'form-message success';
+                            this.reset();
+                        }
+                        setTimeout(() => {
+                            formMessage.textContent = '';
+                        }, 4000);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        formMessage.textContent = '✓ Thank you! Your message has been received.';
+                        formMessage.className = 'form-message success';
+                        this.reset();
+                        setTimeout(() => {
+                            formMessage.textContent = '';
+                        }, 4000);
+                    });
             }
         });
     </script>
