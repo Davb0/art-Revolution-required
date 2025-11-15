@@ -142,6 +142,8 @@ class EventAggregator {
       {
         title: 'Jazz Night at Fratelli',
         daysFromNow: 1,
+        hour: 20,
+        minute: 30,
         location: 'Fratelli Studios',
         originalDescription: 'Live jazz performance featuring local and international artists.',
         category: 'music'
@@ -149,6 +151,8 @@ class EventAggregator {
       {
         title: 'Art Exhibition - Contemporary Timișoara',
         daysFromNow: 3,
+        hour: 10,
+        minute: 0,
         location: 'Muzeul de Artă',
         originalDescription: 'Showcasing modern art from local Timișoara artists.',
         category: 'art'
@@ -156,6 +160,8 @@ class EventAggregator {
       {
         title: 'Food Festival - Banat Flavors',
         daysFromNow: 5,
+        hour: 12,
+        minute: 0,
         location: 'Piața Victoriei',
         originalDescription: 'Traditional Banat cuisine festival with local restaurants.',
         category: 'food'
@@ -163,6 +169,8 @@ class EventAggregator {
       {
         title: 'Theater Performance - Hamlet',
         daysFromNow: 7,
+        hour: 19,
+        minute: 30,
         location: 'Teatrul Național',
         originalDescription: 'Classic Shakespearean play in Romanian.',
         category: 'theater'
@@ -170,6 +178,8 @@ class EventAggregator {
       {
         title: 'Tech Meetup - Web Development',
         daysFromNow: 10,
+        hour: 18,
+        minute: 0,
         location: 'UVT Campus',
         originalDescription: 'Monthly meetup for web developers in Timișoara.',
         category: 'technology'
@@ -177,34 +187,48 @@ class EventAggregator {
       {
         title: 'Christmas Market Opening',
         daysFromNow: 14,
+        hour: 10,
+        minute: 0,
         location: 'Piața Unirii',
         originalDescription: 'Annual Christmas market with local crafts and food.',
         category: 'cultural'
       }
     ];
     
-    return mockEvents.map(event => ({
-      title: event.title,
-      date: new Date(today.getTime() + event.daysFromNow * 24 * 60 * 60 * 1000).toISOString(),
-      location: event.location,
-      originalDescription: event.originalDescription,
-      category: event.category
-    }));
+    return mockEvents.map(event => {
+      const eventDate = new Date(today.getTime() + event.daysFromNow * 24 * 60 * 60 * 1000);
+      eventDate.setHours(event.hour, event.minute, 0, 0);
+      
+      return {
+        title: event.title,
+        date: eventDate.toISOString(),
+        location: event.location,
+        originalDescription: event.originalDescription,
+        category: event.category
+      };
+    });
   }
 
   getFallbackOfficialEvents() {
     const today = new Date();
+    
+    const event1Date = new Date(today.getTime() + 2 * 24 * 60 * 60 * 1000);
+    event1Date.setHours(10, 0, 0, 0);
+    
+    const event2Date = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000);
+    event2Date.setHours(9, 0, 0, 0);
+    
     return [
       {
         title: 'Consiliul Local - Ședință Publică',
-        date: new Date(today.getTime() + 2 * 24 * 60 * 60 * 1000).toISOString(),
+        date: event1Date.toISOString(),
         location: 'Primăria Timișoara',
         originalDescription: 'Ședința publică a Consiliului Local Timișoara.',
         category: 'official'
       },
       {
         title: 'Ziua Orașului Timișoara',
-        date: new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+        date: event2Date.toISOString(),
         location: 'Centrul Istoric',
         originalDescription: 'Celebrarea zilei orașului cu evenimente culturale.',
         category: 'official'
@@ -214,10 +238,14 @@ class EventAggregator {
 
   getFallbackEntertainmentEvents() {
     const today = new Date();
+    
+    const eventDate = new Date(today.getTime() + 4 * 24 * 60 * 60 * 1000);
+    eventDate.setHours(21, 0, 0, 0);
+    
     return [
       {
         title: 'Concert Rock în Centrul Vechi',
-        date: new Date(today.getTime() + 4 * 24 * 60 * 60 * 1000).toISOString(),
+        date: eventDate.toISOString(),
         location: 'Piața Unirii',
         originalDescription: 'Concert rock cu trupe locale.',
         category: 'music'

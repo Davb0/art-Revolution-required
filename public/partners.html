@@ -10,6 +10,16 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Email collect modal -->
+    <div id="emailModalOverlay" class="modal-overlay" style="display:none;">
+        <div class="email-modal">
+            <button id="emailModalClose" class="modal-close">×</button>
+            <h3>Before you contact us</h3>
+            <p>Please enter your email so we can get back to you.</p>
+            <input type="email" id="visitorEmailInput" placeholder="your@email.com">
+            <button id="visitorEmailSubmit" class="submit-btn">Continue</button>
+        </div>
+    </div>
     <header class="hero">
         <nav class="nav">
             <div class="nav-brand">
@@ -57,35 +67,13 @@
     </header>
 
     <main class="main-content subpage-content">
-                                formMessage.textContent = 'Sending...';
-                                formMessage.className = 'form-message';
+        <div class="partners-container">
+            <section class="partners-section">
+                <h2 class="section-title">Official Event Sources</h2>
+                <p class="section-description">We partner with these official sources to bring you the most comprehensive event listings in Timișoara.</p>
                 
-                                const pmessage = document.getElementById('pmessage').value;
-                
-                                // Send to backend
-                                fetch('/api/partnership', {
-                                    method: 'POST',
-                                    headers: { 'Content-Type': 'application/json' },
-                                    body: JSON.stringify({ org, contact, pemail, ptype, pmessage })
-                                })
-                                .then(res => res.json())
-                                .then(data => {
-                                    formMessage.textContent = '✓ Thank you! We\'ll review your partnership inquiry and get back to you soon.';
-                                    formMessage.className = 'form-message success';
-                                    this.reset();
-                                    setTimeout(() => {
-                                        formMessage.textContent = '';
-                                    }, 4000);
-                                })
-                                .catch(error => {
-                                    console.error('Error:', error);
-                                    formMessage.textContent = '✓ Thank you! We\'ll review your partnership inquiry and get back to you soon.';
-                                    formMessage.className = 'form-message success';
-                                    this.reset();
-                                    setTimeout(() => {
-                                        formMessage.textContent = '';
-                                    }, 4000);
-                                });
+                <div class="partners-grid">
+                    <div class="partner-card">
                         <div class="partner-badge">Official</div>
                         <h3>Timișoara Official</h3>
                         <p class="partner-category">City Events & Announcements</p>
@@ -481,6 +469,50 @@
             text-decoration: none;
             cursor: pointer;
         }
+        
+        /* Email modal styles */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 1rem;
+        }
+
+        .email-modal {
+            background: var(--surface-dark);
+            border: 1px solid var(--border-color);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 480px;
+            text-align: center;
+            position: relative;
+        }
+
+        .email-modal input[type="email"] {
+            width: 100%;
+            padding: var(--space-md);
+            margin: var(--space-md) 0;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--surface-light);
+            color: var(--text-primary);
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 1.25rem;
+            top: 1.25rem;
+            background: transparent;
+            border: none;
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
     </style>
 
     <script>
@@ -503,6 +535,50 @@
                 }, 4000);
             }
         });
+
+        // Email collection modal logic
+        (function(){
+            const modal = document.getElementById('emailModalOverlay');
+            const emailInput = document.getElementById('visitorEmailInput');
+            const submitBtn = document.getElementById('visitorEmailSubmit');
+            const closeBtn = document.getElementById('emailModalClose');
+
+            function showModal() {
+                if (modal) modal.style.display = 'flex';
+            }
+
+            function hideModal() {
+                if (modal) modal.style.display = 'none';
+            }
+
+            function saveAndPrefill(email) {
+                try { localStorage.setItem('visitorEmail', email); } catch(e){}
+                const emailField = document.getElementById('pemail');
+                if (emailField) emailField.value = email;
+            }
+
+            const stored = (()=>{ try { return localStorage.getItem('visitorEmail'); } catch(e){ return null } })();
+            if (stored) {
+                const emailField = document.getElementById('pemail');
+                if (emailField) emailField.value = stored;
+            } else {
+                window.addEventListener('load', () => {
+                    setTimeout(showModal, 250);
+                });
+            }
+
+            if (submitBtn) submitBtn.addEventListener('click', () => {
+                const val = emailInput.value && emailInput.value.trim();
+                if (!val || !/.+@.+\..+/.test(val)) {
+                    emailInput.focus();
+                    return;
+                }
+                saveAndPrefill(val);
+                hideModal();
+            });
+
+            if (closeBtn) closeBtn.addEventListener('click', () => { hideModal(); });
+        })();
     </script>
 </body>
 </html>
