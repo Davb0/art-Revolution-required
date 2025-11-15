@@ -142,7 +142,11 @@ app.post('/api/translate-events', async (req, res) => {
   try {
     const { events, targetLanguage } = req.body;
     
+    console.log('🔄 Translation API called');
+    console.log('📋 Request body:', { eventsCount: events?.length, targetLanguage });
+    
     if (!events || !Array.isArray(events) || !targetLanguage) {
+      console.log('❌ Invalid request parameters');
       return res.status(400).json({
         success: false,
         error: 'Invalid request. Events array and targetLanguage required.'
@@ -150,21 +154,23 @@ app.post('/api/translate-events', async (req, res) => {
     }
     
     if (!['en', 'ro'].includes(targetLanguage)) {
+      console.log('❌ Unsupported language:', targetLanguage);
       return res.status(400).json({
         success: false,
         error: 'Unsupported language. Use "en" or "ro".'
       });
     }
     
-    console.log(`Translating ${events.length} events to ${targetLanguage}`);
+    console.log(`🌍 Translating ${events.length} events to ${targetLanguage}`);
+    console.log('📝 First event before translation:', {
+      title: events[0]?.title,
+      description: events[0]?.enhancedDescription || events[0]?.originalDescription,
+      existingTranslations: events[0]?.translations
+    });
     
     const translatedEvents = await Promise.all(
       events.map(async (event) => {
-        // Check if event already has translation for target language
-        if (event.translations && event.translations[targetLanguage]) {
-          return event;
-        }
-        
+        // Always translate to ensure fresh translations with improved dictionary
         try {
           const translation = await aiService.translateEvent(event, targetLanguage);
           return {
@@ -176,11 +182,17 @@ app.post('/api/translate-events', async (req, res) => {
           };
         } catch (error) {
           console.warn(`Failed to translate event "${event.title}":`, error.message);
-          // Return event without translation on error
+          // Return event with existing translation or original content on error
           return event;
         }
       })
     );
+    
+    console.log('✅ Translation completed');
+    console.log('📝 First translated event:', {
+      title: translatedEvents[0]?.title,
+      translations: translatedEvents[0]?.translations
+    });
     
     res.json(translatedEvents);
   } catch (error) {
@@ -188,6 +200,152 @@ app.post('/api/translate-events', async (req, res) => {
     res.status(500).json({
       success: false,
       error: 'Translation failed'
+    });
+  }
+});
+
+// Submit new event for verification
+app.post('/api/submit-event', async (req, res) => {
+  try {
+    const eventData = req.body;
+    
+    // Basic input validation
+    if (!eventData || typeof eventData !== 'object') {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid event data'
+      });
+    }
+
+    console.log('📝 New event submission:', eventData.title);
+
+    // Verify event with AI
+    const verification = await aiService.verifyEventSubmission(eventData);
+    
+    if (verification.approved) {
+      // Store approved event (in production, this would go to a database)
+      const newEvent = {
+        id: Date.now().toString(),
+        ...eventData,
+        status: 'pending_final_review', // Still needs admin approval
+        submittedAt: new Date().toISOString(),
+        verificationScore: verification.score,
+        aiApproved: true
+      };
+
+      // For now, store in memory (in production use database)
+      if (!global.pendingEvents) {
+        global.pendingEvents = [];
+      }
+      global.pendingEvents.push(newEvent);
+
+      console.log(`✅ Event approved by AI (${verification.score}/100): ${eventData.title}`);
+      
+      res.json({
+        success: true,
+        approved: true,
+        message: 'Event submitted successfully! It will be reviewed by our team and published soon.',
+        feedback: verification.feedback,
+        suggestions: verification.suggestions,
+        estimatedReview: '24-48 hours'
+      });
+    } else {
+      console.log(`❌ Event rejected by AI (${verification.score}/100): ${eventData.title} - ${verification.reason}`);
+      
+      res.json({
+        success: true,
+        approved: false,
+        message: 'Event submission needs improvement before it can be published.',
+        feedback: verification.feedback,
+        suggestions: verification.suggestions,
+        score: verification.score,
+        reason: verification.reason
+      });
+    }
+
+  } catch (error) {
+    console.error('Event submission error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to process event submission. Please try again.'
+    });
+  }
+});
+
+// Get pending events (admin only)
+app.get('/api/admin/pending-events', validateApiKey, (req, res) => {
+  try {
+    const pendingEvents = global.pendingEvents || [];
+    res.json({
+      success: true,
+      events: pendingEvents,
+      count: pendingEvents.length
+    });
+  } catch (error) {
+    console.error('Error fetching pending events:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch pending events'
+    });
+  }
+});
+
+// Approve/reject pending event (admin only)
+app.post('/api/admin/review-event/:id', validateApiKey, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { action, feedback } = req.body; // action: 'approve' | 'reject'
+    
+    if (!global.pendingEvents) {
+      return res.status(404).json({
+        success: false,
+        error: 'No pending events found'
+      });
+    }
+
+    const eventIndex = global.pendingEvents.findIndex(event => event.id === id);
+    if (eventIndex === -1) {
+      return res.status(404).json({
+        success: false,
+        error: 'Event not found'
+      });
+    }
+
+    const event = global.pendingEvents[eventIndex];
+
+    if (action === 'approve') {
+      // Add to live events cache
+      const liveEvent = {
+        ...event,
+        status: 'published',
+        publishedAt: new Date().toISOString(),
+        source: 'user_submission',
+        visitSource: event.website || null,
+        ticketPrice: event.ticketPrice || null
+      };
+
+      // Add to events cache
+      eventsCache.data.unshift(liveEvent);
+      console.log(`✅ Event approved and published: ${event.title}`);
+      
+    } else {
+      console.log(`❌ Event rejected by admin: ${event.title}`);
+    }
+
+    // Remove from pending
+    global.pendingEvents.splice(eventIndex, 1);
+
+    res.json({
+      success: true,
+      message: `Event ${action}d successfully`,
+      action
+    });
+
+  } catch (error) {
+    console.error('Event review error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to review event'
     });
   }
 });

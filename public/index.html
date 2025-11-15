@@ -158,6 +158,111 @@
         </div>
     </div>
 
+    <!-- Event Submission Modal -->
+    <div class="modal-overlay" id="submitModalOverlay">
+        <div class="submit-modal" id="submitModal">
+            <button class="modal-close" id="submitModalClose">×</button>
+            <div class="submit-modal-content">
+                <h2>Submit Your Event</h2>
+                <p class="submit-subtitle">Share your cultural event with Timișoara! Our AI will review it for quality and relevance.</p>
+                
+                <form id="eventSubmissionForm" class="submission-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="eventTitle">Event Title *</label>
+                            <input type="text" id="eventTitle" name="title" required maxlength="100">
+                        </div>
+                        <div class="form-group">
+                            <label for="eventCategory">Category *</label>
+                            <select id="eventCategory" name="category" required>
+                                <option value="">Select category</option>
+                                <option value="art">Art & Exhibition</option>
+                                <option value="music">Music</option>
+                                <option value="theater">Theater</option>
+                                <option value="film">Film & Cinema</option>
+                                <option value="festival">Festival</option>
+                                <option value="workshop">Workshop</option>
+                                <option value="conference">Conference</option>
+                                <option value="cultural">Cultural</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventDescription">Event Description *</label>
+                        <textarea id="eventDescription" name="description" required maxlength="500" 
+                                  placeholder="Describe your event in detail. What makes it special? Who should attend?"></textarea>
+                        <small class="char-counter">0/500 characters</small>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="eventDate">Date *</label>
+                            <input type="date" id="eventDate" name="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventTime">Time</label>
+                            <input type="time" id="eventTime" name="time">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventLocation">Location *</label>
+                        <input type="text" id="eventLocation" name="location" required maxlength="150" 
+                               placeholder="Venue name and address in Timișoara">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="eventPrice">Ticket Price</label>
+                            <input type="text" id="eventPrice" name="ticketPrice" placeholder="Free, 20 RON, 15-25 EUR">
+                        </div>
+                        <div class="form-group">
+                            <label for="eventWebsite">Website/Social Link</label>
+                            <input type="url" id="eventWebsite" name="website" placeholder="https://...">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="organizerContact">Your Contact Info *</label>
+                        <input type="email" id="organizerContact" name="organizerContact" required 
+                               placeholder="your@email.com (for verification only, not published)">
+                        <small>This will only be used for event verification and won't be displayed publicly.</small>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancelSubmission">Cancel</button>
+                        <button type="submit" class="btn-primary" id="submitEventBtn">
+                            <span class="btn-text">Submit Event</span>
+                            <span class="btn-loading" style="display: none;">
+                                <svg width="16" height="16" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" opacity="0.3"/>
+                                    <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" stroke-width="4" fill="none">
+                                        <animateTransform attributeName="transform" type="rotate" 
+                                                        values="0 12 12;360 12 12" dur="1s" repeatCount="indefinite"/>
+                                    </path>
+                                </svg>
+                                Verifying with AI...
+                            </span>
+                        </button>
+                    </div>
+                </form>
+                
+                <div id="submissionResult" class="submission-result" style="display: none;">
+                    <!-- Success/error messages will appear here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Submit Button -->
+    <button class="floating-submit-btn" id="floatingSubmitBtn" title="Submit Your Event">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L12 22M2 12L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+    </button>
+
     <footer class="footer">
         <div class="footer-content">
             <p>&copy; 2024 Art Revolution • Timișoara Cultural Hub</p>
@@ -165,6 +270,6 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=2025111506"></script>
 </body>
 </html>

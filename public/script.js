@@ -1,4 +1,5 @@
-// Art Revolution - Timișoara Events JavaScript
+// Art Revolution - Timișoara Events JavaScript v2025111502
+console.log('🚀 Art Revolution Events App Loading - Translation Fixed Version v2');
 
 class EventsApp {
   constructor() {
@@ -60,6 +61,7 @@ class EventsApp {
 
   async init() {
     this.bindEventListeners();
+    this.initEventSubmission();
     this.updateTranslateButton();
     await this.loadEvents();
     this.setupFilters();
@@ -130,28 +132,70 @@ class EventsApp {
   }
 
   async toggleLanguage() {
-    const previousLanguage = this.currentLanguage;
-    this.currentLanguage = this.currentLanguage === 'en' ? 'ro' : 'en';
-    
-    this.updateTranslations();
-    this.updateTranslateButton();
-    
-    // Show loading state
-    this.showLoading(true, 'Translating events...');
-    
-    try {
-      // Translate events if needed
-      await this.translateEvents();
-      this.renderEvents();
-    } catch (error) {
-      console.error('Translation failed:', error);
-      // Revert language change on error
-      this.currentLanguage = previousLanguage;
-      this.updateTranslateButton();
-      this.showError('Translation failed. Please try again.');
-    } finally {
-      this.showLoading(false);
-    }
+    // Show feature not available message
+    this.showTranslationMessage();
+  }
+
+  showTranslationMessage() {
+    // Create modal overlay
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    `;
+
+    // Create message modal
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+      background: var(--surface-dark);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: var(--shadow-xl);
+      border: 1px solid var(--border-color);
+    `;
+
+    modal.innerHTML = `
+      <div style="font-size: 3rem; margin-bottom: 1rem;">🚧</div>
+      <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-family: var(--font-display);">Oops!!</h3>
+      <p style="color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.5;">This feature hasn't been developed yet</p>
+      <button id="closeTranslationMessage" style="
+        background: var(--primary-color);
+        color: var(--background-dark);
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: var(--radius-md);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all var(--transition-normal);
+      ">Got it!</button>
+    `;
+
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+
+    // Handle close
+    const closeBtn = document.getElementById('closeTranslationMessage');
+    const closeModal = () => {
+      document.body.removeChild(overlay);
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) closeModal();
+    });
+
+    // Auto close after 3 seconds
+    setTimeout(closeModal, 3000);
   }
 
   updateTranslations() {
@@ -196,52 +240,8 @@ class EventsApp {
     }
   }
 
-  async translateEvents() {
-    // Check if events already have translations for current language
-    const needsTranslation = this.events.some(event => 
-      !event.translations || !event.translations[this.currentLanguage]
-    );
-    
-    if (!needsTranslation) {
-      return; // Already translated
-    }
-    
-    try {
-      const response = await fetch('/api/translate-events', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          events: this.events,
-          targetLanguage: this.currentLanguage
-        })
-      });
-      
-      if (!response.ok) {
-        throw new Error('Translation request failed');
-      }
-      
-      const translatedEvents = await response.json();
-      this.events = translatedEvents;
-      this.filteredEvents = [...this.events];
-      
-    } catch (error) {
-      console.error('Error translating events:', error);
-      throw error;
-    }
-  }
-
   getLocalizedContent(event, field) {
-    // Check if event has translations
-    if (event.translations && event.translations[this.currentLanguage]) {
-      const translatedValue = event.translations[this.currentLanguage][field];
-      if (translatedValue) {
-        return translatedValue;
-      }
-    }
-    
-    // Fall back to original content
+    // Always return original content since translation is not implemented
     switch (field) {
       case 'title':
         return event.title;
@@ -637,6 +637,148 @@ class EventsApp {
     }
     
     this.showLoading(false);
+  }
+
+  // Event Submission Functionality
+  initEventSubmission() {
+    const floatingBtn = document.getElementById('floatingSubmitBtn');
+    const modal = document.getElementById('submitModalOverlay');
+    const closeBtn = document.getElementById('submitModalClose');
+    const cancelBtn = document.getElementById('cancelSubmission');
+    const form = document.getElementById('eventSubmissionForm');
+    const descriptionField = document.getElementById('eventDescription');
+    const charCounter = document.querySelector('.char-counter');
+
+    // Show modal
+    floatingBtn?.addEventListener('click', () => {
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    });
+
+    // Hide modal
+    const hideModal = () => {
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+      this.resetSubmissionForm();
+    };
+
+    closeBtn?.addEventListener('click', hideModal);
+    cancelBtn?.addEventListener('click', hideModal);
+    modal?.addEventListener('click', (e) => {
+      if (e.target === modal) hideModal();
+    });
+
+    // Character counter
+    descriptionField?.addEventListener('input', (e) => {
+      const length = e.target.value.length;
+      charCounter.textContent = `${length}/500 characters`;
+      
+      if (length > 450) {
+        charCounter.style.color = 'var(--warning-color)';
+      } else {
+        charCounter.style.color = 'var(--text-secondary)';
+      }
+    });
+
+    // Form submission
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      this.handleEventSubmission(form);
+    });
+  }
+
+  async handleEventSubmission(form) {
+    const formData = new FormData(form);
+    const eventData = Object.fromEntries(formData.entries());
+    
+    const submitBtn = document.getElementById('submitEventBtn');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const btnLoading = submitBtn.querySelector('.btn-loading');
+    const resultDiv = document.getElementById('submissionResult');
+
+    // Show loading state
+    submitBtn.disabled = true;
+    btnText.style.display = 'none';
+    btnLoading.style.display = 'flex';
+    resultDiv.style.display = 'none';
+
+    try {
+      const response = await fetch('/api/submit-event', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(eventData)
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        if (result.approved) {
+          this.showSubmissionResult('success', 
+            '✅ Event Submitted Successfully!',
+            result.message + (result.suggestions ? '\n\nSuggestions: ' + result.suggestions.join(', ') : '')
+          );
+          form.reset();
+          document.querySelector('.char-counter').textContent = '0/500 characters';
+        } else {
+          this.showSubmissionResult('warning',
+            '⚠️ Event Needs Improvement',
+            result.feedback + (result.suggestions ? '\n\nSuggestions:\n• ' + result.suggestions.join('\n• ') : '')
+          );
+        }
+      } else {
+        this.showSubmissionResult('error', 
+          '❌ Submission Failed', 
+          result.error || 'Please try again later.'
+        );
+      }
+
+    } catch (error) {
+      console.error('Submission error:', error);
+      this.showSubmissionResult('error', 
+        '❌ Network Error', 
+        'Please check your connection and try again.'
+      );
+    } finally {
+      // Reset button state
+      submitBtn.disabled = false;
+      btnText.style.display = 'inline';
+      btnLoading.style.display = 'none';
+    }
+  }
+
+  showSubmissionResult(type, title, message) {
+    const resultDiv = document.getElementById('submissionResult');
+    resultDiv.className = `submission-result ${type}`;
+    resultDiv.innerHTML = `
+      <h4 style="margin: 0 0 0.5rem 0; font-size: 1.1rem;">${title}</h4>
+      <p style="margin: 0; white-space: pre-line; line-height: 1.4;">${message}</p>
+    `;
+    resultDiv.style.display = 'block';
+
+    // Auto-hide success messages after delay
+    if (type === 'success') {
+      setTimeout(() => {
+        const modal = document.getElementById('submitModalOverlay');
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+        this.resetSubmissionForm();
+      }, 3000);
+    }
+  }
+
+  resetSubmissionForm() {
+    const form = document.getElementById('eventSubmissionForm');
+    const resultDiv = document.getElementById('submissionResult');
+    const charCounter = document.querySelector('.char-counter');
+    
+    form?.reset();
+    resultDiv.style.display = 'none';
+    if (charCounter) {
+      charCounter.textContent = '0/500 characters';
+      charCounter.style.color = 'var(--text-secondary)';
+    }
   }
 }
 

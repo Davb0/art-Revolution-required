@@ -234,17 +234,17 @@ class EventAggregator {
     
     return [
       {
-        title: 'Consiliul Local - Ședință Publică',
+        title: 'City Council - Public Session',
         date: event1Date.toISOString(),
-        location: 'Primăria Timișoara',
-        originalDescription: 'Ședința publică a Consiliului Local Timișoara.',
+        location: 'Timișoara City Hall',
+        originalDescription: 'Public session of the Timișoara City Council.',
         category: 'official'
       },
       {
-        title: 'Ziua Orașului Timișoara',
+        title: 'Timișoara City Day',
         date: event2Date.toISOString(),
-        location: 'Centrul Istoric',
-        originalDescription: 'Celebrarea zilei orașului cu evenimente culturale.',
+        location: 'Historic Center',
+        originalDescription: 'City day celebration with cultural events.',
         category: 'official'
       }
     ];
@@ -258,10 +258,10 @@ class EventAggregator {
     
     return [
       {
-        title: 'Concert Rock în Centrul Vechi',
+        title: 'Rock Concert in Old Town',
         date: eventDate.toISOString(),
-        location: 'Piața Unirii',
-        originalDescription: 'Concert rock cu trupe locale.',
+        location: 'Union Square',
+        originalDescription: 'Rock concert featuring local bands.',
         category: 'music'
       }
     ];
