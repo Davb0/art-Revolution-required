@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" width="800" height="300">
+  <defs>
+    <style>
+      .logo-text { 
+        font-family: 'Times New Roman', serif; 
+        font-weight: normal;
+        fill: currentColor;
+      }
+      .main-line { font-size: 100px; }
+      .sub-line { font-size: 70px; font-style: italic; }
+    </style>
+  </defs>
+  
+  <text x="20" y="120" class="logo-text main-line">art</text>
+  <text x="120" y="120" class="logo-text main-line">|</text>
+  <text x="150" y="120" class="logo-text main-line">Revolution</text>
+  <text x="280" y="210" class="logo-text sub-line">/required</text>
+</svg>
