@@ -204,6 +204,160 @@ class EventAggregator {
         category: 'cultural',
         visitSource: 'https://www.primariatm.ro/targul-de-craciun',
         ticketPrice: 'Free entry'
+      },
+      {
+        title: 'Rock Concert - Local Bands Night',
+        daysFromNow: 2,
+        hour: 21,
+        minute: 0,
+        location: 'Club Flex',
+        originalDescription: 'Rock concert featuring local bands from Timișoara and Banat region.',
+        category: 'music',
+        visitSource: 'https://www.flex.ro/events/rock-night',
+        ticketPrice: '40 RON'
+      },
+      {
+        title: 'Photography Workshop - Street Art',
+        daysFromNow: 4,
+        hour: 14,
+        minute: 0,
+        location: 'Casa Artelor',
+        originalDescription: 'Learn street photography techniques in Timișoara historic center.',
+        category: 'workshop',
+        visitSource: 'https://casaartelor.ro/workshops',
+        ticketPrice: '80 RON'
+      },
+      {
+        title: 'Film Screening - Romanian Cinema',
+        daysFromNow: 6,
+        hour: 19,
+        minute: 0,
+        location: 'Cinema City',
+        originalDescription: 'Special screening of award-winning Romanian films.',
+        category: 'film',
+        visitSource: 'https://cinemacity.ro/timisoara',
+        ticketPrice: '25 RON'
+      },
+      {
+        title: 'Fashion Show - Local Designers',
+        daysFromNow: 8,
+        hour: 20,
+        minute: 0,
+        location: 'Hotel Continental',
+        originalDescription: 'Showcase of emerging fashion designers from Timișoara.',
+        category: 'fashion',
+        visitSource: 'https://hotelcontinental.ro/events',
+        ticketPrice: '120 RON'
+      },
+      {
+        title: 'Book Launch - "Stories of Timișoara"',
+        daysFromNow: 9,
+        hour: 18,
+        minute: 30,
+        location: 'Librăria Humanitas',
+        originalDescription: 'Author reading and book signing for local history collection.',
+        category: 'literature',
+        visitSource: 'https://humanitas.ro/timisoara',
+        ticketPrice: 'Free'
+      },
+      {
+        title: 'Startup Pitch Competition',
+        daysFromNow: 11,
+        hour: 17,
+        minute: 0,
+        location: 'Impact Hub Timișoara',
+        originalDescription: 'Young entrepreneurs pitch their innovative business ideas.',
+        category: 'conference',
+        visitSource: 'https://impacthub.ro/timisoara/events',
+        ticketPrice: 'Free registration'
+      },
+      {
+        title: 'Craft Beer Festival',
+        daysFromNow: 12,
+        hour: 16,
+        minute: 0,
+        location: 'Parcul Central',
+        originalDescription: 'Local and regional craft breweries showcase their best beers.',
+        category: 'food',
+        visitSource: 'https://craftbeerfest.ro',
+        ticketPrice: '60 RON'
+      },
+      {
+        title: 'Opera Performance - La Traviata',
+        daysFromNow: 15,
+        hour: 19,
+        minute: 30,
+        location: 'Opera Națională Română',
+        originalDescription: 'Classic Verdi opera performed by the Romanian National Opera.',
+        category: 'theatre',
+        visitSource: 'https://operatm.ro/spectacole',
+        ticketPrice: '50-200 RON'
+      },
+      {
+        title: 'Digital Art Exhibition - AI & Creativity',
+        daysFromNow: 16,
+        hour: 11,
+        minute: 0,
+        location: 'Muzeul Banatului',
+        originalDescription: 'Interactive exhibition exploring AI in contemporary art.',
+        category: 'exhibition',
+        visitSource: 'https://muzeulbanatului.ro/expozitii',
+        ticketPrice: '20 RON'
+      },
+      {
+        title: 'Folklore Dance Performance',
+        daysFromNow: 18,
+        hour: 19,
+        minute: 0,
+        location: 'Casa de Cultură',
+        originalDescription: 'Traditional Romanian and Banat folk dances by local groups.',
+        category: 'cultural',
+        visitSource: 'https://casaculturii-tm.ro/evenimente',
+        ticketPrice: '30 RON'
+      },
+      {
+        title: 'Indie Music Festival',
+        daysFromNow: 20,
+        hour: 18,
+        minute: 0,
+        location: 'Iulius Parc',
+        originalDescription: 'Three-day festival featuring indie bands from across Europe.',
+        category: 'festival',
+        visitSource: 'https://indiefest.ro',
+        ticketPrice: '150 RON (3 days)'
+      },
+      {
+        title: 'Architecture Walk - Baroque Timișoara',
+        daysFromNow: 22,
+        hour: 10,
+        minute: 0,
+        location: 'Piața Unirii (start)',
+        originalDescription: 'Guided tour of baroque architecture in the historic center.',
+        category: 'cultural',
+        visitSource: 'https://ghidturistic.ro/timisoara',
+        ticketPrice: '45 RON'
+      },
+      {
+        title: 'Comedy Night - Stand-up Special',
+        daysFromNow: 24,
+        hour: 21,
+        minute: 30,
+        location: 'Club Escape',
+        originalDescription: 'Evening of stand-up comedy with Romanian comedians.',
+        category: 'theatre',
+        visitSource: 'https://escape.ro/comedy-nights',
+        ticketPrice: '35 RON'
+      },
+      {
+        title: 'Vintage Car Show',
+        daysFromNow: 26,
+        hour: 9,
+        minute: 0,
+        location: 'Parcul Rozelor',
+        originalDescription: 'Classic and vintage car exhibition from local collectors.',
+        category: 'other',
+        visitSource: 'https://vintagecars.ro/timisoara',
+        ticketPrice: 'Free entry'
       }
     ];
     

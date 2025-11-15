@@ -12,6 +12,9 @@ const validateApiKey = (req, res, next) => {
   // In production, validate against stored API keys
   // For demo, accept any non-empty key
   if (process.env.NODE_ENV === 'production' && apiKey !== process.env.ADMIN_API_KEY) {
+    console.log('🔑 API Key validation failed:');
+    console.log('  Received:', apiKey);
+    console.log('  Expected:', process.env.ADMIN_API_KEY);
     return res.status(403).json({
       success: false,
       error: 'Invalid API key'

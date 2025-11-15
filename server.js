@@ -8,7 +8,7 @@ require('dotenv').config();
 
 const eventAggregator = require('./src/services/eventAggregator');
 const aiService = require('./src/services/aiService');
-const { validateApiKey, errorHandler } = require('./src/middleware');
+const { errorHandler } = require('./src/middleware');
 const { sendContactEmail, sendNewsletterConfirmation, sendPartnershipEmail } = require('./src/services/emailService');
 
 const app = express();
@@ -41,6 +41,8 @@ let eventsCache = {
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
+
+// Removed admin dashboard for simplicity
 
 // Get all enhanced events
 app.get('/api/events', async (req, res) => {
@@ -119,7 +121,8 @@ app.get('/api/events/:id', async (req, res) => {
 });
 
 // Refresh events manually
-app.post('/api/events/refresh', validateApiKey, async (req, res) => {
+// Force refresh events cache (simplified - no auth needed)
+app.post('/api/events/refresh', async (req, res) => {
   try {
     await updateEventsCache();
     res.json({
@@ -223,31 +226,34 @@ app.post('/api/submit-event', async (req, res) => {
     const verification = await aiService.verifyEventSubmission(eventData);
     
     if (verification.approved) {
-      // Store approved event (in production, this would go to a database)
+      // Auto-approve and publish events that pass AI verification
       const newEvent = {
         id: Date.now().toString(),
         ...eventData,
-        status: 'pending_final_review', // Still needs admin approval
+        status: 'published',
+        publishedAt: new Date().toISOString(),
         submittedAt: new Date().toISOString(),
         verificationScore: verification.score,
-        aiApproved: true
+        aiApproved: true,
+        source: 'user_submission',
+        visitSource: eventData.website || null,
+        ticketPrice: eventData.ticketPrice || null,
+        enhancedDescription: eventData.description,
+        originalDescription: eventData.description
       };
 
-      // For now, store in memory (in production use database)
-      if (!global.pendingEvents) {
-        global.pendingEvents = [];
-      }
-      global.pendingEvents.push(newEvent);
+      // Add directly to live events cache
+      eventsCache.data.unshift(newEvent);
 
-      console.log(`✅ Event approved by AI (${verification.score}/100): ${eventData.title}`);
+      console.log(`✅ Event auto-approved and published (${verification.score}/100): ${eventData.title}`);
       
       res.json({
         success: true,
         approved: true,
-        message: 'Event submitted successfully! It will be reviewed by our team and published soon.',
+        message: 'Event submitted and published successfully! It\'s now live on the website.',
         feedback: verification.feedback,
         suggestions: verification.suggestions,
-        estimatedReview: '24-48 hours'
+        trackingId: newEvent.id
       });
     } else {
       console.log(`❌ Event rejected by AI (${verification.score}/100): ${eventData.title} - ${verification.reason}`);
@@ -272,80 +278,34 @@ app.post('/api/submit-event', async (req, res) => {
   }
 });
 
-// Get pending events (admin only)
-app.get('/api/admin/pending-events', validateApiKey, (req, res) => {
+// Get user events by email (simplified - only live events)
+app.get('/api/user-events', (req, res) => {
   try {
-    const pendingEvents = global.pendingEvents || [];
-    res.json({
-      success: true,
-      events: pendingEvents,
-      count: pendingEvents.length
-    });
-  } catch (error) {
-    console.error('Error fetching pending events:', error);
-    res.status(500).json({
-      success: false,
-      error: 'Failed to fetch pending events'
-    });
-  }
-});
-
-// Approve/reject pending event (admin only)
-app.post('/api/admin/review-event/:id', validateApiKey, async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { action, feedback } = req.body; // action: 'approve' | 'reject'
+    const { email } = req.query;
     
-    if (!global.pendingEvents) {
-      return res.status(404).json({
+    if (!email) {
+      return res.status(400).json({
         success: false,
-        error: 'No pending events found'
+        error: 'Email parameter required'
       });
     }
 
-    const eventIndex = global.pendingEvents.findIndex(event => event.id === id);
-    if (eventIndex === -1) {
-      return res.status(404).json({
-        success: false,
-        error: 'Event not found'
-      });
-    }
-
-    const event = global.pendingEvents[eventIndex];
-
-    if (action === 'approve') {
-      // Add to live events cache
-      const liveEvent = {
-        ...event,
-        status: 'published',
-        publishedAt: new Date().toISOString(),
-        source: 'user_submission',
-        visitSource: event.website || null,
-        ticketPrice: event.ticketPrice || null
-      };
-
-      // Add to events cache
-      eventsCache.data.unshift(liveEvent);
-      console.log(`✅ Event approved and published: ${event.title}`);
-      
-    } else {
-      console.log(`❌ Event rejected by admin: ${event.title}`);
-    }
-
-    // Remove from pending
-    global.pendingEvents.splice(eventIndex, 1);
+    // Get live events for this user
+    const userEvents = eventsCache.data.filter(
+      event => event.source === 'user_submission' && event.organizerContact === email
+    );
 
     res.json({
       success: true,
-      message: `Event ${action}d successfully`,
-      action
+      events: userEvents,
+      count: userEvents.length
     });
 
   } catch (error) {
-    console.error('Event review error:', error);
+    console.error('Error fetching user events:', error);
     res.status(500).json({
       success: false,
-      error: 'Failed to review event'
+      error: 'Failed to fetch events'
     });
   }
 });

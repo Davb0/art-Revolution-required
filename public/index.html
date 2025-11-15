@@ -176,17 +176,30 @@
                             <label for="eventCategory">Category *</label>
                             <select id="eventCategory" name="category" required>
                                 <option value="">Select category</option>
-                                <option value="art">Art & Exhibition</option>
-                                <option value="music">Music</option>
-                                <option value="theater">Theater</option>
-                                <option value="film">Film & Cinema</option>
-                                <option value="festival">Festival</option>
-                                <option value="workshop">Workshop</option>
-                                <option value="conference">Conference</option>
-                                <option value="cultural">Cultural</option>
-                                <option value="other">Other</option>
+                                <option value="art">🎨 Art & Exhibition</option>
+                                <option value="music">🎵 Music</option>
+                                <option value="theater">🎭 Theater</option>
+                                <option value="film">🎬 Film & Cinema</option>
+                                <option value="festival">🎪 Festival</option>
+                                <option value="workshop">🔧 Workshop</option>
+                                <option value="conference">💼 Conference</option>
+                                <option value="cultural">🏛️ Cultural</option>
+                                <option value="food">🍽️ Food & Drink</option>
+                                <option value="sports">⚽ Sports</option>
+                                <option value="technology">💻 Technology</option>
+                                <option value="fashion">👗 Fashion</option>
+                                <option value="literature">📚 Literature</option>
+                                <option value="other">📌 Other</option>
                             </select>
                         </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventTags">Tags</label>
+                        <input type="text" id="eventTags" name="tags" 
+                               placeholder="indie, local artists, free entry, family-friendly (separate with commas)"
+                               maxlength="200">
+                        <small>Add relevant tags to help people discover your event</small>
                     </div>
                     
                     <div class="form-group">
@@ -213,6 +226,15 @@
                                placeholder="Venue name and address in Timișoara">
                     </div>
                     
+                    <div class="form-group">
+                        <label for="eventImage">Event Image</label>
+                        <input type="file" id="eventImage" name="image" accept="image/*">
+                        <small>Upload a promotional image for your event (max 5MB, JPG/PNG)</small>
+                        <div id="imagePreview" class="image-preview" style="display: none;">
+                            <img id="previewImg" style="max-width: 200px; max-height: 200px; border-radius: 8px; margin-top: 1rem;">
+                        </div>
+                    </div>
+                    
                     <div class="form-row">
                         <div class="form-group">
                             <label for="eventPrice">Ticket Price</label>
@@ -221,6 +243,50 @@
                         <div class="form-group">
                             <label for="eventWebsite">Website/Social Link</label>
                             <input type="url" id="eventWebsite" name="website" placeholder="https://...">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventType">Event Type</label>
+                        <select id="eventType" name="eventType">
+                            <option value="single">Single Event</option>
+                            <option value="recurring">Recurring Event</option>
+                            <option value="series">Event Series</option>
+                        </select>
+                    </div>
+                    
+                    <div id="recurringOptions" class="form-group" style="display: none;">
+                        <label for="recurringPattern">Recurring Pattern</label>
+                        <select id="recurringPattern" name="recurringPattern">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="biweekly">Bi-weekly</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="custom">Custom</option>
+                        </select>
+                        <small>Select how often this event repeats</small>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="eventCapacity">Expected Attendance</label>
+                            <select id="eventCapacity" name="capacity">
+                                <option value="">Not specified</option>
+                                <option value="small">Small (1-50 people)</option>
+                                <option value="medium">Medium (50-200 people)</option>
+                                <option value="large">Large (200-500 people)</option>
+                                <option value="massive">Massive (500+ people)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventAccessibility">Accessibility</label>
+                            <select id="eventAccessibility" name="accessibility">
+                                <option value="">Not specified</option>
+                                <option value="wheelchair">Wheelchair accessible</option>
+                                <option value="hearing">Hearing impaired friendly</option>
+                                <option value="visual">Visual impaired friendly</option>
+                                <option value="full">Full accessibility</option>
+                            </select>
                         </div>
                     </div>
                     
@@ -234,7 +300,7 @@
                     <div class="form-actions">
                         <button type="button" class="btn-secondary" id="cancelSubmission">Cancel</button>
                         <button type="submit" class="btn-primary" id="submitEventBtn">
-                            <span class="btn-text">Submit Event</span>
+                            <span class="btn-text">Submit & Publish Event</span>
                             <span class="btn-loading" style="display: none;">
                                 <svg width="16" height="16" viewBox="0 0 24 24">
                                     <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" opacity="0.3"/>
@@ -256,12 +322,16 @@
         </div>
     </div>
 
+    <!-- Tracking removed for simplicity -->
+
     <!-- Floating Submit Button -->
     <button class="floating-submit-btn" id="floatingSubmitBtn" title="Submit Your Event">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path d="M12 2L12 22M2 12L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
         </svg>
     </button>
+    
+    <!-- Tracking button removed for simplicity -->
 
     <footer class="footer">
         <div class="footer-content">
