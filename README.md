@@ -1,10 +1,10 @@
-# 🎭 Art Revolution - Timișoara Events Platform
+# 🎭 art|Revolution/required - Timișoara Events Platform
 
-**Experience Timișoara's Cultural Revolution** - A sophisticated Node.js platform showcasing Romania's European Capital of Culture through AI-enhanced event discovery and community-driven submissions.
+**Experience Timișoara's Cultural Revolution** - A sophisticated Node.js platform showcasing Romania's European Capital of Culture through AI-enhanced event discovery, community-driven submissions, and comprehensive social media sharing.
 
 ## ✨ Platform Overview
 
-Art Revolution is a comprehensive cultural events platform designed for Timișoara, Romania's European Capital of Culture. It combines modern web technologies with AI-powered content enhancement to create an immersive experience for discovering local cultural events.
+art|Revolution/required is a comprehensive cultural events platform designed for Timișoara, Romania's European Capital of Culture. It combines modern web technologies with AI-powered content enhancement and integrated social media sharing to create an immersive experience for discovering and promoting local cultural events.
 
 ![Main Homepage](./docs/images/homepage-hero.png)
 *The main landing page featuring our bold hero section and intuitive navigation*
@@ -29,16 +29,24 @@ Art Revolution is a comprehensive cultural events platform designed for Timișoa
 ![Event Submission Form](./docs/images/03-submission-form.png)
 *Comprehensive event submission modal with all necessary fields for quality event creation*
 
+### 📱 **Social Media Integration**
+- **Multi-Platform Sharing**: Facebook, Twitter, WhatsApp, and Instagram sharing for every event
+- **Smart Share Buttons**: Platform-specific styling with gradient Instagram button
+- **Mobile Web Share API**: Native sharing on mobile devices with clipboard fallback
+- **Optimized Share Text**: Auto-generated engaging share content with hashtags #artRevolutionRequired
+
 ### 🎨 **Advanced UI/UX**
 - **Dark Theme Design**: Contemporary aesthetic perfect for cultural content
 - **Mobile-First Responsive**: Optimized for all device sizes
 - **Touch Interactions**: Enhanced mobile experience with haptic feedback
 - **Smooth Animations**: Engaging transitions and loading states
+- **Consistent Branding**: Black text on all buttons for optimal readability
 
 ### 🌍 **Multi-Language Support**
-- **English/Romanian Toggle**: Seamless language switching
-- **AI Translation**: Automatic content translation for international visitors
+- **English Date Formatting**: All dates displayed in English format for international accessibility
+- **AI Translation**: Automatic content translation for international visitors  
 - **Localized Content**: Cultural context maintained across languages
+- **Cross-Platform Compatibility**: Social sharing works across all devices and platforms
 
 ![Filter Panel](./docs/images/04-filter-panel.png)
 *Advanced filtering system with categories, moods, and target audience options*
@@ -61,11 +69,12 @@ Art Revolution is a comprehensive cultural events platform designed for Timișoa
 ![Contact Page](./docs/images/08-contact-page.png)
 *Contact form and information for community engagement and feedback*
 
-## �🛠️ Tech Stack
+## 🛠️ Tech Stack
 
 - **Backend**: Node.js, Express.js
 - **AI Processing**: Google Gemini API, Ollama (fallback)
 - **Frontend**: Vanilla JavaScript, Modern CSS3
+- **Social Integration**: Web Share API, Clipboard API, Platform-specific sharing
 - **Data Sources**: Multi-source web scraping with Axios & Cheerio
 - **Security**: Helmet.js, CORS, input sanitization
 - **Deployment**: Vercel-ready with Railway & Render support
@@ -75,74 +84,9 @@ Art Revolution is a comprehensive cultural events platform designed for Timișoa
 ![Platform Stats](./docs/images/09-platform-stats.png)
 *Real-time statistics showing active events, categories, and last update information*
 
-## 📦 Quick Installation
+## � Screenshots
 
-### 1. Clone & Install
-
-```bash
-# Clone the repository
-git clone https://github.com/Davb0/art-Revolution-required.git
-cd art-Revolution-required
-
-# Install all dependencies
-npm install
-```
-
-### 2. Environment Configuration
-
-Create your environment file:
-```bash
-cp .env.example .env
-```
-
-**Required Environment Variables:**
-```env
-# Server Configuration
-PORT=3000
-NODE_ENV=production
-
-# AI Enhancement (Primary)
-GEMINI_API_KEY=your_gemini_api_key_here
-
-# AI Fallback (Optional but recommended)
-OLLAMA_HOST=http://localhost:11434
-OLLAMA_MODEL=llama2
-
-# Email Service (Optional - for contact forms)
-EMAIL_USER=your_email@domain.com
-EMAIL_PASSWORD=your_app_password
-
-# Cache Settings
-CACHE_DURATION_HOURS=6
-```
-
-### 3. Get Your API Keys
-
-**Gemini API (Recommended):**
-1. Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
-2. Create a new API key
-3. Add to `.env` as `GEMINI_API_KEY`
-
-**Ollama Setup (Fallback):**
-```bash
-# Install Ollama locally
-curl -fsSL https://ollama.ai/install.sh | sh
-
-# Pull recommended model
-ollama pull llama2
-```
-
-### 4. Launch Application
-
-```bash
-# Development with hot-reload
-npm run dev
-
-# Production mode
-npm start
-```
-
-**🌐 Access your platform at:** `http://localhost:3000`
+<!-- Add your screenshots here -->
 
 ## 🎨 Platform Experience
 
@@ -161,6 +105,7 @@ Each event card features:
 - **Mood Indicators**: Energetic, Intimate, Festive vibes
 - **Local Venues**: Real Timișoara locations (Opera Națională, Muzeul de Artă, etc.)
 - **Pricing Info**: From free events to premium cultural experiences
+- **Social Sharing Buttons**: Instant sharing to Facebook, Twitter, WhatsApp, and Instagram with optimized content
 
 ### 📝 **Event Submission Flow**
 Community members can easily:
@@ -535,4 +480,4 @@ The app showcases over **20 diverse cultural events** across categories like:
 
 **🚀 Live Demo**: [art-revolution-timisoara.vercel.app](https://art-revolution-timisoara.vercel.app)
 
-**Art Revolution** • *Timișoara's Cultural Pulse* • Built with ❤️ for Romania's ECoC 2023
+**art|Revolution/required** • *Timișoara's Cultural Pulse* • Built with ❤️ for Romania's ECoC 2023
