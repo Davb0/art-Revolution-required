@@ -478,6 +478,4 @@ The app showcases over **20 diverse cultural events** across categories like:
 
 ---
 
-**🚀 Live Demo**: [art-revolution-timisoara.vercel.app](https://art-revolution-timisoara.vercel.app)
-
-**art|Revolution/required** • *Timișoara's Cultural Pulse* • Built with ❤️ for Romania's ECoC 2023
+**art|Revolution/required** • *Timișoara's Cultural Pulse* • Built with ❤️ for Romania's ECoC 
