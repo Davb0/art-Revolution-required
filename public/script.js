@@ -372,19 +372,58 @@ class EventsApp {
     
     // Bind click events to event cards
     container.querySelectorAll('.event-card').forEach((card, index) => {
-      card.addEventListener('click', () => this.showEventModal(this.filteredEvents[index]));
+      // Event card click (for modal)
+      card.addEventListener('click', (e) => {
+        // Don't trigger modal if clicking on any share button
+        if (e.target.closest('.share-btn')) return;
+        this.showEventModal(this.filteredEvents[index]);
+      });
+      
+      // Social share buttons
+      const facebookBtn = card.querySelector('.facebook-btn');
+      const twitterBtn = card.querySelector('.twitter-btn');
+      const whatsappBtn = card.querySelector('.whatsapp-btn');
+      const instagramBtn = card.querySelector('.instagram-btn');
+      
+      if (facebookBtn) {
+        facebookBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.shareToFacebook(index);
+        });
+      }
+      
+      if (twitterBtn) {
+        twitterBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.shareToTwitter(index);
+        });
+      }
+      
+      if (whatsappBtn) {
+        whatsappBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.shareToWhatsApp(index);
+        });
+      }
+      
+      if (instagramBtn) {
+        instagramBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.shareToInstagram(e, index);
+        });
+      }
     });
   }
 
   createEventCard(event, index) {
     const date = new Date(event.date);
-    const formattedDate = date.toLocaleDateString('ro-RO', {
+    const formattedDate = date.toLocaleDateString('en-US', {
       weekday: 'short',
       month: 'short',
       day: 'numeric'
     });
     
-    const formattedTime = date.toLocaleTimeString('ro-RO', {
+    const formattedTime = date.toLocaleTimeString('en-US', {
       hour: '2-digit',
       minute: '2-digit',
       hour12: false
@@ -431,6 +470,25 @@ class EventsApp {
             </div>
           ` : ''}
         </div>
+        
+        <div class="event-actions">
+          <div class="social-share-buttons">
+            <button class="share-btn facebook-btn" title="Share on Facebook">
+              📘 Facebook
+            </button>
+            <button class="share-btn twitter-btn" title="Share on Twitter">
+              🐦 Twitter
+            </button>
+            <button class="share-btn whatsapp-btn" title="Share on WhatsApp">
+              📱 WhatsApp
+            </button>
+          </div>
+          <div class="instagram-share-section">
+            <button class="share-btn instagram-btn" title="Share to Instagram">
+              📷 Instagram
+            </button>
+          </div>
+        </div>
       </div>
     `;
   }
@@ -442,14 +500,14 @@ class EventsApp {
     if (!modal || !overlay) return;
     
     const date = new Date(event.date);
-    const formattedDate = date.toLocaleDateString('ro-RO', {
+    const formattedDate = date.toLocaleDateString('en-US', {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
       day: 'numeric'
     });
     
-    const formattedTime = date.toLocaleTimeString('ro-RO', {
+    const formattedTime = date.toLocaleTimeString('en-US', {
       hour: '2-digit',
       minute: '2-digit',
       hour12: false
@@ -1170,6 +1228,130 @@ class EventsApp {
     }, duration);
 
     return notification;
+  }
+
+  // Social sharing functionality
+  shareToFacebook(eventIndex) {
+    const eventData = this.filteredEvents[eventIndex];
+    if (!eventData) return;
+
+    const eventTitle = this.getLocalizedContent(eventData, 'title');
+    const eventLocation = this.getLocalizedContent(eventData, 'location');
+    const eventDescription = this.getLocalizedContent(eventData, 'description');
+    
+    const shareUrl = encodeURIComponent(window.location.href);
+    const shareText = encodeURIComponent(`🎭 ${eventTitle} in ${eventLocation} - ${eventDescription}`);
+    
+    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}&quote=${shareText}`;
+    window.open(facebookUrl, '_blank', 'width=600,height=400');
+  }
+
+  shareToTwitter(eventIndex) {
+    const eventData = this.filteredEvents[eventIndex];
+    if (!eventData) return;
+
+    const eventTitle = this.getLocalizedContent(eventData, 'title');
+    const eventLocation = this.getLocalizedContent(eventData, 'location');
+    const date = new Date(eventData.date);
+    const formattedDate = date.toLocaleDateString('en-US', {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric'
+    });
+
+    const shareText = encodeURIComponent(`🎭 ${eventTitle}\n📅 ${formattedDate}\n📍 ${eventLocation}\n\n#TimisoaraCulture #ArtRevolution #Events`);
+    const shareUrl = encodeURIComponent(window.location.href);
+    
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`;
+    window.open(twitterUrl, '_blank', 'width=600,height=400');
+  }
+
+  shareToWhatsApp(eventIndex) {
+    const eventData = this.filteredEvents[eventIndex];
+    if (!eventData) return;
+
+    const eventTitle = this.getLocalizedContent(eventData, 'title');
+    const eventLocation = this.getLocalizedContent(eventData, 'location');
+    const date = new Date(eventData.date);
+    const formattedDate = date.toLocaleDateString('en-US', {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric'
+    });
+
+    const shareText = encodeURIComponent(`🎭 *${eventTitle}*\n📅 ${formattedDate}\n📍 ${eventLocation}\n\n#TimisoaraCulture #ArtRevolution\n\n${window.location.href}`);
+    
+    const whatsappUrl = `https://wa.me/?text=${shareText}`;
+    window.open(whatsappUrl, '_blank');
+  }
+
+  // Instagram sharing functionality
+  shareToInstagram(event, eventIndex) {
+    event.stopPropagation(); // Prevent event card click
+    
+    const eventData = this.filteredEvents[eventIndex];
+    if (!eventData) return;
+
+    const eventTitle = this.getLocalizedContent(eventData, 'title');
+    const eventLocation = this.getLocalizedContent(eventData, 'location');
+    const date = new Date(eventData.date);
+    const formattedDate = date.toLocaleDateString('en-US', {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric'
+    });
+
+    // Create shareable text
+    const shareText = `🎭 ${eventTitle}\n📅 ${formattedDate}\n📍 ${eventLocation}\n\n#TimisoaraCulture #ArtRevolution #Events`;
+
+    // Try to use Web Share API first (works on mobile)
+    if (navigator.share) {
+      navigator.share({
+        title: eventTitle,
+        text: shareText,
+        url: window.location.href
+      }).catch(err => {
+        console.log('Share cancelled or failed:', err);
+        this.fallbackInstagramShare(shareText);
+      });
+    } else {
+      // Fallback for desktop
+      this.fallbackInstagramShare(shareText);
+    }
+  }
+
+  fallbackInstagramShare(shareText) {
+    // Copy to clipboard
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(shareText).then(() => {
+        this.showNotification('success', 'Copied!', 'Event details copied to clipboard. Paste in Instagram!', 4000);
+      }).catch(() => {
+        this.manualCopyFallback(shareText);
+      });
+    } else {
+      this.manualCopyFallback(shareText);
+    }
+  }
+
+  manualCopyFallback(text) {
+    // Manual copy fallback
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-999999px';
+    textArea.style.top = '-999999px';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+      document.execCommand('copy');
+      this.showNotification('success', 'Copied!', 'Event details copied! Paste in Instagram!', 4000);
+    } catch (err) {
+      this.showNotification('error', 'Copy Failed', 'Could not copy event details', 3000);
+    }
+
+    document.body.removeChild(textArea);
   }
 }
 
