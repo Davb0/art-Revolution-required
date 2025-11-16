@@ -1,5 +1,5 @@
-// Art Revolution - Timișoara Events JavaScript v2025111502
-console.log('🚀 Art Revolution Events App Loading - Translation Fixed Version v2');
+// art|Revolution/required - Timișoara Events JavaScript v2025111502
+console.log('🚀 art|Revolution/required Events App Loading - Translation Fixed Version v2');
 
 // Simple test to verify JavaScript is working
 window.addEventListener('load', () => {
@@ -1259,7 +1259,7 @@ class EventsApp {
       day: 'numeric'
     });
 
-    const shareText = encodeURIComponent(`🎭 ${eventTitle}\n📅 ${formattedDate}\n📍 ${eventLocation}\n\n#TimisoaraCulture #ArtRevolution #Events`);
+    const shareText = encodeURIComponent(`🎭 ${eventTitle}\n📅 ${formattedDate}\n📍 ${eventLocation}\n\n#TimisoaraCulture #artRevolutionRequired #Events`);
     const shareUrl = encodeURIComponent(window.location.href);
     
     const twitterUrl = `https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`;
@@ -1279,7 +1279,7 @@ class EventsApp {
       day: 'numeric'
     });
 
-    const shareText = encodeURIComponent(`🎭 *${eventTitle}*\n📅 ${formattedDate}\n📍 ${eventLocation}\n\n#TimisoaraCulture #ArtRevolution\n\n${window.location.href}`);
+    const shareText = encodeURIComponent(`🎭 *${eventTitle}*\n📅 ${formattedDate}\n📍 ${eventLocation}\n\n#TimisoaraCulture #artRevolutionRequired\n\n${window.location.href}`);
     
     const whatsappUrl = `https://wa.me/?text=${shareText}`;
     window.open(whatsappUrl, '_blank');
@@ -1302,7 +1302,7 @@ class EventsApp {
     });
 
     // Create shareable text
-    const shareText = `🎭 ${eventTitle}\n📅 ${formattedDate}\n📍 ${eventLocation}\n\n#TimisoaraCulture #ArtRevolution #Events`;
+    const shareText = `🎭 ${eventTitle}\n📅 ${formattedDate}\n📍 ${eventLocation}\n\n#TimisoaraCulture #artRevolutionRequired #Events`;
 
     // Try to use Web Share API first (works on mobile)
     if (navigator.share) {

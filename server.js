@@ -450,7 +450,7 @@ cron.schedule('0 */6 * * *', async () => {
 
 // Start server
 app.listen(PORT, async () => {
-  console.log(`🚀 Art Revolution server running on port ${PORT}`);
+  console.log(`🚀 art|Revolution/required server running on port ${PORT}`);
   console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
   
   // Initial cache load

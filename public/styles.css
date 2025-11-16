@@ -1,4 +1,4 @@
-/* Art Revolution - Timișoara Events CSS */
+/* art|Revolution/required - Timișoara Events CSS */
 
 :root {
   /* Natural Color Palette */
@@ -546,7 +546,7 @@ body {
   padding: var(--space-sm) var(--space-xs);
   border: none;
   border-radius: var(--radius-md);
-  color: white;
+  color: black;
   font-weight: 600;
   font-size: 0.75rem;
   cursor: pointer;
@@ -1252,7 +1252,7 @@ a[href^="http"]:active {
 
 .btn-primary {
   background: var(--primary-color);
-  color: var(--background-dark);
+  color: black;
 }
 
 .btn-primary:hover {
@@ -1269,13 +1269,13 @@ a[href^="http"]:active {
 
 .btn-secondary {
   background: transparent;
-  color: var(--text-secondary);
+  color: black;
   border: 1px solid var(--border-color);
 }
 
 .btn-secondary:hover {
   background: var(--surface-light);
-  color: var(--text-primary);
+  color: black;
 }
 
 .submission-result {
